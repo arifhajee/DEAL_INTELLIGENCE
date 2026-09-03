@@ -1,0 +1,33 @@
+definition_version: "2"
+# NOTE: If you change values in deploy.config, update the matching values below:
+#   DEAL_INTEL_QUERY_WH → query_warehouse
+#   DEAL_INTEL_COMPUTE_POOL → build_compute_pool.name / service_compute_pool.name
+#   DEAL_INTEL_EAI → build_eai.name
+
+entities:
+  deal_intel_app:
+    type: snowflake-app
+    identifier:
+      name: DEAL_INTEL_APP
+      database: DEAL_INTEL
+      schema: APP_SERVICE
+    artifacts:
+      - src: ./*
+        dest: ./
+        ignore:
+          - node_modules
+          - .env*
+          - __pycache__
+          - "*.pyc"
+          - .next
+          - .git
+          - snowflake.log
+
+    query_warehouse: DEAL_INTEL_QUERY_WH
+    build_compute_pool:
+      name: DOC_MONITOR_POOL
+    service_compute_pool:
+      name: DOC_MONITOR_POOL
+    build_eai:
+      name: DEAL_INTEL_EGRESS_EAI
+    code_workspace: DEAL_INTEL.APP_SERVICE.SNOWFLAKE_APPS

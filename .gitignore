@@ -1,0 +1,37 @@
+# =============================================================================
+# Root .gitignore for DEAL_INTELLIGENCE
+# The app/ directory has its own .gitignore for Next.js/Node artifacts.
+# =============================================================================
+
+# Deploy logs (build artifacts)
+deploy.log
+
+
+# Python artifacts (from any local tooling)
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Snowflake CLI
+.snowflake/
+
+# Secrets and local env
+.env
+.env.local
+.env.*.local
+
+# Gap audit state files (tooling artifact, not project source)
+.gap-audit-state.json
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+scripts/generated_docs/*.pdf

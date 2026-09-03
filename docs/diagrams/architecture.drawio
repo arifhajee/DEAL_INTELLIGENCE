@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1"
+  tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1"
+  pageWidth="1440" pageHeight="1560" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Outer container -->
+    <mxCell id="2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2FAFE;strokeColor=#11567F;strokeWidth=3;arcSize=1;" vertex="1" parent="1">
+      <mxGeometry x="10" y="10" width="1380" height="1530" as="geometry" />
+    </mxCell>
+
+    <!-- Title bar -->
+    <mxCell id="3" value="&lt;b&gt;DOC_INTEL — DOCUMENT INTELLIGENCE PLATFORM&lt;/b&gt;" style="text;html=1;strokeColor=#11567F;fillColor=#11567F;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=17;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="10" y="10" width="1090" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="4" value="&lt;b&gt;Snowflake Native&lt;/b&gt;" style="text;html=1;strokeColor=#0A3D62;fillColor=#29B5E8;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="10" width="290" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- 01 SOURCE SYSTEM -->
+    <mxCell id="10" value="&lt;b&gt;01  SOURCE SYSTEM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EBF5FB;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="80" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <!-- IR Components -->
+    <mxCell id="20" value="&lt;b&gt;ImageRight&lt;/b&gt;&#xa;(Vertafore DMS)&#xa;Files / Drawers / Docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="180" y="110" width="200" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="21" value="&lt;b&gt;REST API&lt;/b&gt;&#xa;Export Service&#xa;(Delta Sync)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="500" y="110" width="200" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="22" value="&lt;b&gt;TIFF Files&lt;/b&gt;&#xa;+ Metadata JSON&#xa;(Sidecar)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="820" y="110" width="200" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="23" value="&lt;b&gt;@imageright_stage&lt;/b&gt;&#xa;Snowflake Internal Stage&#xa;(Auto-Refresh)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="110" width="220" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Arrows within layer 01 -->
+    <mxCell id="100" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="380" y="145" as="sourcePoint" />
+        <mxPoint x="500" y="145" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="101" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="145" as="sourcePoint" />
+        <mxPoint x="820" y="145" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="102" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1020" y="145" as="sourcePoint" />
+        <mxPoint x="1100" y="145" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Arrow between layer 01 and 02 -->
+    <mxCell id="103" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="200" as="sourcePoint" />
+        <mxPoint x="700" y="240" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 02 DOCUMENT PARSING -->
+    <mxCell id="11" value="&lt;b&gt;02  DOCUMENT PARSING (Cortex AI)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#11567F;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="240" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="30" value="&lt;b&gt;AI_PARSE_DOCUMENT&lt;/b&gt;&#xa;OCR Mode&#xa;(Fast Text Extraction)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="250" y="275" width="240" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="31" value="&lt;b&gt;AI_PARSE_DOCUMENT&lt;/b&gt;&#xa;LAYOUT Mode&#xa;(Tables + Structure)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="560" y="275" width="240" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="32" value="&lt;b&gt;Page Flattening&lt;/b&gt;&#xa;1 row per page&#xa;(LATERAL FLATTEN)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="870" y="275" width="240" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 02 and 03 -->
+    <mxCell id="104" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="360" as="sourcePoint" />
+        <mxPoint x="700" y="400" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 03 AI ENRICHMENT -->
+    <mxCell id="12" value="&lt;b&gt;03  AI ENRICHMENT (Cortex AI)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#11567F;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="400" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="40" value="&lt;b&gt;AI_CLASSIFY&lt;/b&gt;&#xa;Document Type&#xa;(FNOL, Dec Page, Endorsement...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="435" width="260" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="41" value="&lt;b&gt;AI_EXTRACT&lt;/b&gt;&#xa;Key Attributes&#xa;(Policy#, Claim#, Amounts, Dates)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="540" y="435" width="280" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="42" value="&lt;b&gt;IR Metadata Merge&lt;/b&gt;&#xa;Cross-reference&#xa;(policy_number, claim_number, source_folder)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="900" y="435" width="260" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 03 and 04 -->
+    <mxCell id="105" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="520" as="sourcePoint" />
+        <mxPoint x="700" y="560" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 04 STRUCTURED STORAGE -->
+    <mxCell id="13" value="&lt;b&gt;04  STRUCTURED STORAGE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D6EAF8;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="560" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="50" value="&lt;b&gt;DOCUMENT_CATALOG&lt;/b&gt;&#xa;(Dynamic Table)&#xa;Structured attrs + Full text + IR metadata" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="350" y="595" width="350" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="51" value="&lt;b&gt;DOCUMENT_PAGES&lt;/b&gt;&#xa;(1 row per page)&#xa;Granular content" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="780" y="595" width="250" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 04 and 05 -->
+    <mxCell id="106" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="450" y="680" as="sourcePoint" />
+        <mxPoint x="450" y="720" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="107" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="950" y="680" as="sourcePoint" />
+        <mxPoint x="950" y="720" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 05 INTELLIGENCE SERVICES -->
+    <mxCell id="14" value="&lt;b&gt;05  INTELLIGENCE SERVICES&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#11567F;strokeColor=#0A1428;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="720" width="1340" height="130" as="geometry" />
+    </mxCell>
+
+    <mxCell id="60" value="&lt;b&gt;Cortex Search Service&lt;/b&gt;&#xa;Hybrid Vector + Keyword&#xa;(RAG Retrieval Engine)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="200" y="760" width="280" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="61" value="&lt;b&gt;Semantic View&lt;/b&gt;&#xa;Cortex Analyst&#xa;(Natural Language → SQL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="560" y="760" width="280" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="62" value="&lt;b&gt;Embedding Model&lt;/b&gt;&#xa;snowflake-arctic-&#xa;embed-l-v2.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="920" y="760" width="220" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 05 and 06 -->
+    <mxCell id="108" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="850" as="sourcePoint" />
+        <mxPoint x="700" y="890" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 06 CORTEX AGENT -->
+    <mxCell id="15" value="&lt;b&gt;06  CORTEX AGENT (CoWork)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3A5C;strokeColor=#0A1428;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="890" width="1340" height="130" as="geometry" />
+    </mxCell>
+
+    <mxCell id="70" value="&lt;b&gt;Document Intelligence Agent&lt;/b&gt;&#xa;Dynamic Routing: Search ↔ Analytics&#xa;Insurance-Aware Instructions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="350" y="930" width="380" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="71" value="&lt;b&gt;LLM&lt;/b&gt;&#xa;claude-sonnet-4-5&#xa;(Response Generation)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#29B5E8;strokeColor=#E8F6FD;strokeWidth=2;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="820" y="930" width="220" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 06 and 07 -->
+    <mxCell id="109" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="1020" as="sourcePoint" />
+        <mxPoint x="700" y="1060" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 07 APPLICATION LAYER (SPCS) -->
+    <mxCell id="18" value="&lt;b&gt;07  APPLICATION (SPCS)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D6EAF8;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="1060" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="84" value="&lt;b&gt;DOC_INTEL_APP&lt;/b&gt;&#xa;Next.js on SPCS&#xa;(Restricted Caller Rights)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="150" y="1095" width="240" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="85" value="&lt;b&gt;Document Browser&lt;/b&gt;&#xa;Search · Review Queue&#xa;Analytics · Bookmarks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="440" y="1095" width="240" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="86" value="&lt;b&gt;Admin UI&lt;/b&gt;&#xa;Pipeline · Schema Config&#xa;Labels · LOBs · Test Lab" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="730" y="1095" width="240" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="87" value="&lt;b&gt;Entitlements&lt;/b&gt;&#xa;Role-Based Access&#xa;Admin · Analyst · Viewer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1020" y="1095" width="240" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- Arrow between layer 07 and 08 -->
+    <mxCell id="110" value="" style="endArrow=block;endFill=1;strokeColor=#29B5E8;strokeWidth=2.5;fillColor=#29B5E8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="1180" as="sourcePoint" />
+        <mxPoint x="700" y="1220" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 08 END USERS -->
+    <mxCell id="16" value="&lt;b&gt;08  END USERS&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EBF5FB;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="1220" width="1340" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="80" value="&lt;b&gt;Claims Examiners&lt;/b&gt;&#xa;Search denials, find policies&#xa;Review AI extractions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="130" y="1255" width="250" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="81" value="&lt;b&gt;Underwriters&lt;/b&gt;&#xa;Submissions, loss history&#xa;Portfolio analytics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="430" y="1255" width="250" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="82" value="&lt;b&gt;Operations / Mgmt&lt;/b&gt;&#xa;Pipeline health, cost tracking&#xa;Quality metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="730" y="1255" width="250" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="83" value="&lt;b&gt;Admin / IT&lt;/b&gt;&#xa;Schema config, user mgmt&#xa;Notifications, audit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1030" y="1255" width="230" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- 09 ORCHESTRATION (bottom) -->
+    <mxCell id="17" value="&lt;b&gt;09  ORCHESTRATION&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D6EAF8;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=5;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="1380" width="1340" height="100" as="geometry" />
+    </mxCell>
+
+    <mxCell id="90" value="&lt;b&gt;Dynamic Tables&lt;/b&gt;&#xa;Incremental Refresh&#xa;TARGET_LAG = '1 hour'" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="130" y="1410" width="220" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="91" value="&lt;b&gt;5-Task DAG&lt;/b&gt;&#xa;Stream-triggered&#xa;Parse → Classify → Extract" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="400" y="1410" width="240" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="92" value="&lt;b&gt;Warehouses&lt;/b&gt;&#xa;DOC_INTEL_WH (pipeline)&#xa;DOC_INTEL_QUERY_WH (app)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="690" y="1410" width="240" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="93" value="&lt;b&gt;Security&lt;/b&gt;&#xa;RBAC + Entitlements&#xa;Caller Grants + Audit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#29B5E8;strokeWidth=2;fontColor=#11567F;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="980" y="1410" width="230" height="55" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

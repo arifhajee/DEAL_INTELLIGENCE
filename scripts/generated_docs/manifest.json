@@ -1,0 +1,752 @@
+[
+  {
+    "filename": "0001-TRANS-board_deck-transpeak-TRANS-2024-350.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Board Deck",
+    "company": "TransPeak Logistics, LLC",
+    "deal_code": "TRANS-2024-350",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0002-WATER-dd_report-clearwater-WATER-2025-649.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "DD Report",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2025-649",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0003-SOCIAL-valuation_memo-healthpark-SOCIAL-2024-463.pdf",
+    "sector": "Social Infrastructure",
+    "sector_code": "SOCIAL",
+    "doc_type": "Valuation Memo",
+    "company": "HealthPark Facilities LLC",
+    "deal_code": "SOCIAL-2024-463",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0004-ENERGY-financial_model-solaris-ENERGY-2024-510.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "Financial Model",
+    "company": "Solaris Energy Partners, LLC",
+    "deal_code": "ENERGY-2024-510",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0005-TRANS-valuation_memo-pacific-TRANS-2025-193.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Valuation Memo",
+    "company": "Pacific Maritime Terminal Co.",
+    "deal_code": "TRANS-2025-193",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0006-MULTI-board_deck-cornerstone-MULTI-2024-214.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Board Deck",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2024-214",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0007-POWER-board_deck-atlas-POWER-2026-884.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Board Deck",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2026-884",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0008-DINFRA-board_deck-fiberlink-DINFRA-2022-626.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Board Deck",
+    "company": "FiberLink Networks Inc.",
+    "deal_code": "DINFRA-2022-626",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0009-MULTI-board_deck-cornerstone-MULTI-2023-532.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Board Deck",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2023-532",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0010-MULTI-valuation_memo-cornerstone-MULTI-2023-294.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Valuation Memo",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2023-294",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0011-DINFRA-financial_model-cloudedge-DINFRA-2023-513.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Financial Model",
+    "company": "CloudEdge Partners",
+    "deal_code": "DINFRA-2023-513",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0012-POWER-ic_presentation-atlas-POWER-2022-650.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "IC Presentation",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2022-650",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0013-TRANS-financial_model-gateway-TRANS-2024-719.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Financial Model",
+    "company": "Gateway Logistics Holdings",
+    "deal_code": "TRANS-2024-719",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "North America"
+  },
+  {
+    "filename": "0014-COMM-capital_call-northstar-COMM-2022-177.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Capital Call Notice",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2022-177",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0015-ENERGY-capital_call-gridstore-ENERGY-2023-782.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "Capital Call Notice",
+    "company": "GridStore Systems",
+    "deal_code": "ENERGY-2023-782",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "North America"
+  },
+  {
+    "filename": "0016-COMM-board_deck-northstar-COMM-2024-263.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Board Deck",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2024-263",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0017-COMM-valuation_memo-broadreach-COMM-2024-546.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Valuation Memo",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2024-546",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0018-SOCIAL-dd_report-meridian-SOCIAL-2022-837.pdf",
+    "sector": "Social Infrastructure",
+    "sector_code": "SOCIAL",
+    "doc_type": "DD Report",
+    "company": "Meridian Campus Partners",
+    "deal_code": "SOCIAL-2022-837",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0019-WATER-lp_report-clearwater-WATER-2025-904.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "LP Report",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2025-904",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "North America"
+  },
+  {
+    "filename": "0020-DINFRA-esg_report-fiberlink-DINFRA-2025-744.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "ESG / Sustainability Report",
+    "company": "FiberLink Networks Inc.",
+    "deal_code": "DINFRA-2025-744",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0021-WATER-ic_presentation-clearwater-WATER-2025-236.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "IC Presentation",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2025-236",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0022-COMM-regulatory_filing-northstar-COMM-2024-340.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Regulatory Filing",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2024-340",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "North America"
+  },
+  {
+    "filename": "0023-DINFRA-financial_model-fiberlink-DINFRA-2025-438.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Financial Model",
+    "company": "FiberLink Networks Inc.",
+    "deal_code": "DINFRA-2025-438",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0024-MULTI-lp_report-cornerstone-MULTI-2025-324.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "LP Report",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2025-324",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0025-COMM-lp_report-broadreach-COMM-2022-581.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "LP Report",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2022-581",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0026-ENERGY-term_sheet-gridstore-ENERGY-2026-865.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "Term Sheet",
+    "company": "GridStore Systems",
+    "deal_code": "ENERGY-2026-865",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0027-TRANS-lp_report-pacific-TRANS-2022-455.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "LP Report",
+    "company": "Pacific Maritime Terminal Co.",
+    "deal_code": "TRANS-2022-455",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0028-WATER-board_deck-aquapure-WATER-2023-868.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "Board Deck",
+    "company": "AquaPure Environmental",
+    "deal_code": "WATER-2023-868",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0029-COMM-investment_memo-northstar-COMM-2024-779.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Investment Memo",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2024-779",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "North America"
+  },
+  {
+    "filename": "0030-MULTI-board_deck-cornerstone-MULTI-2023-321.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Board Deck",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2023-321",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0031-DINFRA-financial_model-fiberlink-DINFRA-2025-175.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Financial Model",
+    "company": "FiberLink Networks Inc.",
+    "deal_code": "DINFRA-2025-175",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United States"
+  },
+  {
+    "filename": "0032-WATER-esg_report-clearwater-WATER-2026-857.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "ESG / Sustainability Report",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2026-857",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0033-DINFRA-board_deck-hyperscale-DINFRA-2024-823.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Board Deck",
+    "company": "Hyperscale Data Centers, LLC",
+    "deal_code": "DINFRA-2024-823",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0034-SOCIAL-term_sheet-meridian-SOCIAL-2022-193.pdf",
+    "sector": "Social Infrastructure",
+    "sector_code": "SOCIAL",
+    "doc_type": "Term Sheet",
+    "company": "Meridian Campus Partners",
+    "deal_code": "SOCIAL-2022-193",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States"
+  },
+  {
+    "filename": "0035-SOCIAL-board_deck-meridian-SOCIAL-2024-428.pdf",
+    "sector": "Social Infrastructure",
+    "sector_code": "SOCIAL",
+    "doc_type": "Board Deck",
+    "company": "Meridian Campus Partners",
+    "deal_code": "SOCIAL-2024-428",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0036-WATER-investment_memo-clearwater-WATER-2024-548.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "Investment Memo",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2024-548",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0037-TRANS-board_deck-gateway-TRANS-2022-763.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Board Deck",
+    "company": "Gateway Logistics Holdings",
+    "deal_code": "TRANS-2022-763",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0038-POWER-investment_memo-pipelineone-POWER-2024-665.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Investment Memo",
+    "company": "PipelineOne Midstream",
+    "deal_code": "POWER-2024-665",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0039-COMM-ic_presentation-broadreach-COMM-2023-607.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "IC Presentation",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2023-607",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0040-TRANS-ic_presentation-gateway-TRANS-2026-489.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "IC Presentation",
+    "company": "Gateway Logistics Holdings",
+    "deal_code": "TRANS-2026-489",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0041-WATER-valuation_memo-aquapure-WATER-2024-541.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "Valuation Memo",
+    "company": "AquaPure Environmental",
+    "deal_code": "WATER-2024-541",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0042-WATER-term_sheet-clearwater-WATER-2025-394.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "Term Sheet",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2025-394",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0043-COMM-ic_presentation-broadreach-COMM-2026-402.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "IC Presentation",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2026-402",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0044-TRANS-dd_report-pacific-TRANS-2022-416.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "DD Report",
+    "company": "Pacific Maritime Terminal Co.",
+    "deal_code": "TRANS-2022-416",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States"
+  },
+  {
+    "filename": "0045-POWER-investment_memo-pipelineone-POWER-2024-923.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Investment Memo",
+    "company": "PipelineOne Midstream",
+    "deal_code": "POWER-2024-923",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0046-MULTI-board_deck-cornerstone-MULTI-2025-477.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Board Deck",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2025-477",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0047-MULTI-lp_report-cornerstone-MULTI-2026-860.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "LP Report",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2026-860",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0048-ENERGY-valuation_memo-gridstore-ENERGY-2026-121.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "Valuation Memo",
+    "company": "GridStore Systems",
+    "deal_code": "ENERGY-2026-121",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "North America"
+  },
+  {
+    "filename": "0049-DINFRA-ic_presentation-fiberlink-DINFRA-2023-233.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "IC Presentation",
+    "company": "FiberLink Networks Inc.",
+    "deal_code": "DINFRA-2023-233",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0050-COMM-financial_model-broadreach-COMM-2026-707.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Financial Model",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2026-707",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "Australia"
+  },
+  {
+    "filename": "0051-TRANS-regulatory_filing-transpeak-TRANS-2023-381.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Regulatory Filing",
+    "company": "TransPeak Logistics, LLC",
+    "deal_code": "TRANS-2023-381",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United Kingdom"
+  },
+  {
+    "filename": "0052-MULTI-capital_call-cornerstone-MULTI-2025-562.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Capital Call Notice",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2025-562",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0053-DINFRA-financial_model-hyperscale-DINFRA-2022-195.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Financial Model",
+    "company": "Hyperscale Data Centers, LLC",
+    "deal_code": "DINFRA-2022-195",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0054-POWER-valuation_memo-atlas-POWER-2023-772.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Valuation Memo",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2023-772",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0055-WATER-investment_memo-clearwater-WATER-2023-379.pdf",
+    "sector": "Water & Environmental",
+    "sector_code": "WATER",
+    "doc_type": "Investment Memo",
+    "company": "ClearWater Utilities",
+    "deal_code": "WATER-2023-379",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0056-COMM-lp_report-broadreach-COMM-2024-261.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "LP Report",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2024-261",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0057-DINFRA-ic_presentation-hyperscale-DINFRA-2024-316.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "IC Presentation",
+    "company": "Hyperscale Data Centers, LLC",
+    "deal_code": "DINFRA-2024-316",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0058-COMM-capital_call-broadreach-COMM-2025-396.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Capital Call Notice",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2025-396",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0059-COMM-investment_memo-northstar-COMM-2025-991.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Investment Memo",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2025-991",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "North America"
+  },
+  {
+    "filename": "0060-TRANS-regulatory_filing-transpeak-TRANS-2022-249.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Regulatory Filing",
+    "company": "TransPeak Logistics, LLC",
+    "deal_code": "TRANS-2022-249",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0061-MULTI-financial_model-cornerstone-MULTI-2024-254.pdf",
+    "sector": "Multi-Sector Platform",
+    "sector_code": "MULTI",
+    "doc_type": "Financial Model",
+    "company": "Cornerstone Infrastructure",
+    "deal_code": "MULTI-2024-254",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States (Southeast)"
+  },
+  {
+    "filename": "0062-POWER-term_sheet-atlas-POWER-2025-929.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Term Sheet",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2025-929",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0063-POWER-financial_model-atlas-POWER-2024-481.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "Financial Model",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2024-481",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0064-TRANS-regulatory_filing-gateway-TRANS-2024-771.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Regulatory Filing",
+    "company": "Gateway Logistics Holdings",
+    "deal_code": "TRANS-2024-771",
+    "fund": "DealIntelligence Credit Fund II",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0065-COMM-capital_call-broadreach-COMM-2022-471.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Capital Call Notice",
+    "company": "BroadReach Wireless",
+    "deal_code": "COMM-2022-471",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0066-POWER-esg_report-atlas-POWER-2024-997.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "ESG / Sustainability Report",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2024-997",
+    "fund": "DealIntelligence Digital Infrastructure Fund",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0067-ENERGY-financial_model-gridstore-ENERGY-2023-416.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "Financial Model",
+    "company": "GridStore Systems",
+    "deal_code": "ENERGY-2023-416",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0068-TRANS-investment_memo-pacific-TRANS-2026-971.pdf",
+    "sector": "Transportation & Logistics",
+    "sector_code": "TRANS",
+    "doc_type": "Investment Memo",
+    "company": "Pacific Maritime Terminal Co.",
+    "deal_code": "TRANS-2026-971",
+    "fund": "DealIntelligence Infrastructure Fund III",
+    "geography": "United States (Northeast)"
+  },
+  {
+    "filename": "0069-ENERGY-esg_report-windforce-ENERGY-2022-483.pdf",
+    "sector": "Energy Transition",
+    "sector_code": "ENERGY",
+    "doc_type": "ESG / Sustainability Report",
+    "company": "WindForce Generation Inc.",
+    "deal_code": "ENERGY-2022-483",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States"
+  },
+  {
+    "filename": "0070-DINFRA-ic_presentation-hyperscale-DINFRA-2022-362.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "IC Presentation",
+    "company": "Hyperscale Data Centers, LLC",
+    "deal_code": "DINFRA-2022-362",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "United States (West Coast)"
+  },
+  {
+    "filename": "0071-COMM-capital_call-northstar-COMM-2026-461.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Capital Call Notice",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2026-461",
+    "fund": "DealIntelligence Infrastructure Fund IV",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0072-POWER-dd_report-atlas-POWER-2025-482.pdf",
+    "sector": "Conventional Power",
+    "sector_code": "POWER",
+    "doc_type": "DD Report",
+    "company": "Atlas Gas Generation",
+    "deal_code": "POWER-2025-482",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States"
+  },
+  {
+    "filename": "0073-DINFRA-financial_model-cloudedge-DINFRA-2025-137.pdf",
+    "sector": "Digital Infrastructure",
+    "sector_code": "DINFRA",
+    "doc_type": "Financial Model",
+    "company": "CloudEdge Partners",
+    "deal_code": "DINFRA-2025-137",
+    "fund": "DealIntelligence Infrastructure Fund V",
+    "geography": "United States (Texas/ERCOT)"
+  },
+  {
+    "filename": "0074-SOCIAL-financial_model-meridian-SOCIAL-2025-861.pdf",
+    "sector": "Social Infrastructure",
+    "sector_code": "SOCIAL",
+    "doc_type": "Financial Model",
+    "company": "Meridian Campus Partners",
+    "deal_code": "SOCIAL-2025-861",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "Canada"
+  },
+  {
+    "filename": "0075-COMM-capital_call-northstar-COMM-2025-459.pdf",
+    "sector": "Communications",
+    "sector_code": "COMM",
+    "doc_type": "Capital Call Notice",
+    "company": "NorthStar Tower Holdings",
+    "deal_code": "COMM-2025-459",
+    "fund": "DealIntelligence Global Renewables Fund I",
+    "geography": "United States"
+  }
+]

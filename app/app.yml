@@ -1,0 +1,12 @@
+profile:
+  label: "DealIntel — Infrastructure Investments"
+  description: "AI-powered document intelligence for infrastructure PE — search, analytics, and Q&A over deal documents"
+  icon: icon.svg
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
+  executeAsCaller: true

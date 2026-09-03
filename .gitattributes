@@ -1,0 +1,16 @@
+# =============================================================================
+# Line ending normalization for cross-platform development
+# =============================================================================
+
+# Default: auto-detect
+* text=auto
+
+# Shell scripts: always LF (bash requires it)
+*.sh text eol=lf
+deploy.config text eol=lf
+
+# PowerShell: always CRLF (Windows native)
+*.ps1 text eol=crlf
+
+# SQL: LF (consistent with server-side execution)
+*.sql text eol=lf

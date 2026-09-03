@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#29B5E8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1200" height="900" rx="8" fill="#F2FAFE" stroke="#11567F" stroke-width="2"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="1200" height="44" rx="8" fill="#11567F"/>
+  <text x="600" y="28" text-anchor="middle" fill="white" font-size="16" font-weight="bold">DOC_INTEL — Data Model (6 Schemas)</text>
+
+  <!-- DATA Schema (left) -->
+  <rect x="20" y="60" width="560" height="520" rx="6" fill="#EBF5FB" stroke="#29B5E8" stroke-width="1.5"/>
+  <text x="30" y="80" fill="#11567F" font-size="11" font-weight="bold">DATA Schema</text>
+
+  <!-- ingestion_registry -->
+  <rect x="40" y="95" width="240" height="110" rx="4" fill="white" stroke="#29B5E8" stroke-width="1.5"/>
+  <rect x="40" y="95" width="240" height="22" rx="4" fill="#29B5E8"/>
+  <text x="160" y="110" text-anchor="middle" fill="white" font-size="10" font-weight="bold">ingestion_registry</text>
+  <text x="50" y="130" fill="#11567F" font-size="9">registry_id (PK)</text>
+  <text x="50" y="143" fill="#11567F" font-size="9">file_path, stage_name, file_format</text>
+  <text x="50" y="156" fill="#11567F" font-size="9">ir_file_id, source_folder</text>
+  <text x="50" y="169" fill="#11567F" font-size="9">ir_policy_number, ir_claim_number</text>
+  <text x="50" y="182" fill="#11567F" font-size="9">ingestion_status, processing_version</text>
+  <text x="50" y="195" fill="#11567F" font-size="9">content_hash, first_seen_at</text>
+
+  <!-- parsed_documents -->
+  <rect x="310" y="95" width="250" height="100" rx="4" fill="white" stroke="#29B5E8" stroke-width="1.5"/>
+  <rect x="310" y="95" width="250" height="22" rx="4" fill="#29B5E8"/>
+  <text x="435" y="110" text-anchor="middle" fill="white" font-size="10" font-weight="bold">parsed_documents</text>
+  <text x="320" y="130" fill="#11567F" font-size="9">parse_id (PK)</text>
+  <text x="320" y="143" fill="#11567F" font-size="9">file_path (FK), parse_mode</text>
+  <text x="320" y="156" fill="#11567F" font-size="9">parse_result (VARIANT)</text>
+  <text x="320" y="169" fill="#11567F" font-size="9">raw_content, page_count</text>
+  <text x="320" y="182" fill="#11567F" font-size="9">parse_status, parse_duration_ms</text>
+
+  <!-- document_pages -->
+  <rect x="310" y="210" width="250" height="85" rx="4" fill="white" stroke="#29B5E8" stroke-width="1.5"/>
+  <rect x="310" y="210" width="250" height="22" rx="4" fill="#29B5E8"/>
+  <text x="435" y="225" text-anchor="middle" fill="white" font-size="10" font-weight="bold">document_pages</text>
+  <text x="320" y="245" fill="#11567F" font-size="9">page_id (PK)</text>
+  <text x="320" y="258" fill="#11567F" font-size="9">file_path (FK), page_index</text>
+  <text x="320" y="271" fill="#11567F" font-size="9">page_content, total_pages</text>
+  <text x="320" y="284" fill="#11567F" font-size="9">source_folder, ir_policy_number</text>
+
+  <!-- classified_documents -->
+  <rect x="40" y="220" width="240" height="100" rx="4" fill="white" stroke="#29B5E8" stroke-width="1.5"/>
+  <rect x="40" y="220" width="240" height="22" rx="4" fill="#29B5E8"/>
+  <text x="160" y="235" text-anchor="middle" fill="white" font-size="10" font-weight="bold">classified_documents</text>
+  <text x="50" y="255" fill="#11567F" font-size="9">classification_id (PK)</text>
+  <text x="50" y="268" fill="#11567F" font-size="9">file_path (FK), processing_version</text>
+  <text x="50" y="281" fill="#11567F" font-size="9">primary_document_type</text>
+  <text x="50" y="294" fill="#11567F" font-size="9">confidence_score, needs_review</text>
+  <text x="50" y="307" fill="#11567F" font-size="9">all_document_types (ARRAY)</text>
+
+  <!-- document_attributes -->
+  <rect x="40" y="335" width="240" height="110" rx="4" fill="white" stroke="#29B5E8" stroke-width="1.5"/>
+  <rect x="40" y="335" width="240" height="22" rx="4" fill="#29B5E8"/>
+  <text x="160" y="350" text-anchor="middle" fill="white" font-size="10" font-weight="bold">document_attributes</text>
+  <text x="50" y="370" fill="#11567F" font-size="9">attribute_id (PK)</text>
+  <text x="50" y="383" fill="#11567F" font-size="9">file_path (FK), processing_version</text>
+  <text x="50" y="396" fill="#11567F" font-size="9">extracted_attributes (VARIANT)</text>
+  <text x="50" y="409" fill="#11567F" font-size="9">policy_number, claim_number, carrier</text>
+  <text x="50" y="422" fill="#11567F" font-size="9">line_of_business, effective_date</text>
+  <text x="50" y="435" fill="#11567F" font-size="9">doc_summary, doc_status</text>
+
+  <!-- document_catalog (DT) -->
+  <rect x="310" y="335" width="250" height="85" rx="4" fill="white" stroke="#11567F" stroke-width="2"/>
+  <rect x="310" y="335" width="250" height="22" rx="4" fill="#11567F"/>
+  <text x="435" y="350" text-anchor="middle" fill="white" font-size="10" font-weight="bold">document_catalog (DT)</text>
+  <text x="320" y="370" fill="#11567F" font-size="9">Unified view — Dynamic Table</text>
+  <text x="320" y="383" fill="#11567F" font-size="9">INCREMENTAL refresh, 1-hour lag</text>
+  <text x="320" y="396" fill="#11567F" font-size="9">Joins: registry + parsed + classified</text>
+  <text x="320" y="409" fill="#11567F" font-size="9">+ attributes + overrides_pivoted</text>
+
+  <!-- overrides_pivoted (DT) -->
+  <rect x="310" y="435" width="250" height="60" rx="4" fill="white" stroke="#11567F" stroke-width="1.5"/>
+  <rect x="310" y="435" width="250" height="22" rx="4" fill="#11567F"/>
+  <text x="435" y="450" text-anchor="middle" fill="white" font-size="10" font-weight="bold">overrides_pivoted (DT)</text>
+  <text x="320" y="470" fill="#11567F" font-size="9">Pre-pivoted corrections per document</text>
+  <text x="320" y="483" fill="#11567F" font-size="9">Dynamic Table — feeds catalog</text>
+
+  <!-- Stored Procedures box -->
+  <rect x="40" y="460" width="240" height="105" rx="4" fill="#D6EAF8" stroke="#29B5E8" stroke-width="1"/>
+  <text x="50" y="477" fill="#11567F" font-size="9" font-weight="bold">Stored Procedures</text>
+  <text x="50" y="493" fill="#11567F" font-size="9">sp_parse_pending_documents()</text>
+  <text x="50" y="506" fill="#11567F" font-size="9">sp_classify_parsed_documents()</text>
+  <text x="50" y="519" fill="#11567F" font-size="9">sp_extract_document_attributes()</text>
+  <text x="50" y="532" fill="#11567F" font-size="9">sp_force_reprocess(path, reason)</text>
+  <text x="50" y="545" fill="#11567F" font-size="9">sp_bulk_reprocess(folder, fmt, dry)</text>
+  <text x="50" y="558" fill="#11567F" font-size="9">sp_parse_document_text(stage, path)</text>
+
+  <!-- SERVICES Schema (right) -->
+  <rect x="610" y="60" width="280" height="200" rx="6" fill="#11567F" stroke="#0A1428" stroke-width="1.5"/>
+  <text x="620" y="80" fill="white" font-size="11" font-weight="bold">SERVICES Schema</text>
+
+  <rect x="625" y="90" width="250" height="38" rx="4" fill="#29B5E8" stroke="#E8F6FD" stroke-width="1"/>
+  <text x="750" y="113" text-anchor="middle" fill="white" font-size="9" font-weight="bold">DOC_SEARCH_SVC (Cortex Search)</text>
+
+  <rect x="625" y="135" width="250" height="38" rx="4" fill="#29B5E8" stroke="#E8F6FD" stroke-width="1"/>
+  <text x="750" y="158" text-anchor="middle" fill="white" font-size="9" font-weight="bold">DOC_PAGE_SEARCH_SVC</text>
+
+  <rect x="625" y="180" width="250" height="38" rx="4" fill="#29B5E8" stroke="#E8F6FD" stroke-width="1"/>
+  <text x="750" y="203" text-anchor="middle" fill="white" font-size="9" font-weight="bold">DOCUMENT_ANALYTICS_SV (Semantic View)</text>
+
+  <rect x="625" y="225" width="250" height="28" rx="4" fill="#29B5E8" stroke="#E8F6FD" stroke-width="1"/>
+  <text x="750" y="243" text-anchor="middle" fill="white" font-size="9" font-weight="bold">DOC_INTELLIGENCE_AGENT</text>
+
+  <!-- ADMIN Schema (right) -->
+  <rect x="610" y="280" width="280" height="300" rx="6" fill="#EBF5FB" stroke="#29B5E8" stroke-width="1.5"/>
+  <text x="620" y="300" fill="#11567F" font-size="11" font-weight="bold">ADMIN Schema</text>
+
+  <text x="625" y="320" fill="#11567F" font-size="9">extraction_schemas</text>
+  <text x="625" y="335" fill="#11567F" font-size="9">classification_labels</text>
+  <text x="625" y="350" fill="#11567F" font-size="9">lines_of_business</text>
+  <text x="625" y="365" fill="#11567F" font-size="9">ingestion_stages</text>
+  <text x="625" y="380" fill="#11567F" font-size="9">extraction_overrides</text>
+  <text x="625" y="395" fill="#11567F" font-size="9">notification_rules</text>
+  <text x="625" y="410" fill="#11567F" font-size="9">entitlement_roles</text>
+  <text x="625" y="425" fill="#11567F" font-size="9">user_entitlements</text>
+  <text x="625" y="440" fill="#11567F" font-size="9">document_bookmarks</text>
+  <text x="625" y="455" fill="#11567F" font-size="9">saved_searches</text>
+  <text x="625" y="470" fill="#11567F" font-size="9">search_feedback</text>
+  <text x="625" y="490" fill="#11567F" font-size="9" font-weight="bold">Procedures:</text>
+  <text x="625" y="505" fill="#11567F" font-size="9">sp_reset_pipeline, sp_approve_override</text>
+  <text x="625" y="520" fill="#11567F" font-size="9">sp_get_dashboard_stats</text>
+  <text x="625" y="535" fill="#11567F" font-size="9">sp_emit_notification</text>
+  <text x="625" y="555" fill="#11567F" font-size="9" font-weight="bold">5-Task DAG:</text>
+  <text x="625" y="570" fill="#11567F" font-size="9">task_01 → 02 → 03 → 04 → 05</text>
+
+  <!-- TELEMETRY Schema -->
+  <rect x="920" y="60" width="260" height="120" rx="6" fill="#D6EAF8" stroke="#29B5E8" stroke-width="1.5"/>
+  <text x="930" y="80" fill="#11567F" font-size="11" font-weight="bold">TELEMETRY Schema</text>
+
+  <text x="935" y="100" fill="#11567F" font-size="9">pipeline_events</text>
+  <text x="935" y="115" fill="#11567F" font-size="9">agent_audit_log</text>
+  <text x="935" y="135" fill="#11567F" font-size="9" font-weight="bold">Views:</text>
+  <text x="935" y="150" fill="#11567F" font-size="9">v_pipeline_health, v_error_summary</text>
+  <text x="935" y="165" fill="#11567F" font-size="9">v_cost_by_folder, v_search_analytics</text>
+
+  <!-- APP_SERVICE Schema -->
+  <rect x="920" y="200" width="260" height="80" rx="6" fill="#29B5E8" stroke="#11567F" stroke-width="1.5"/>
+  <text x="930" y="220" fill="white" font-size="11" font-weight="bold">APP_SERVICE Schema</text>
+
+  <text x="935" y="242" fill="white" font-size="9" font-weight="bold">DOC_INTEL_APP</text>
+  <text x="935" y="257" fill="white" font-size="9">Next.js on SPCS (CPU_X64_S)</text>
+  <text x="935" y="272" fill="white" font-size="9">Restricted Caller's Rights</text>
+
+  <!-- Relationships (arrows) -->
+  <line x1="280" y1="150" x2="310" y2="145" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="280" y1="180" x2="280" y2="220" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="160" y1="320" x2="160" y2="335" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="280" y1="385" x2="310" y2="375" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="560" y1="195" x2="560" y2="210" stroke="#29B5E8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <rect x="920" y="310" width="260" height="110" rx="4" fill="white" stroke="#29B5E8" stroke-width="1"/>
+  <text x="935" y="330" fill="#11567F" font-size="10" font-weight="bold">Legend</text>
+  <rect x="935" y="340" width="12" height="12" fill="#29B5E8"/>
+  <text x="955" y="351" fill="#11567F" font-size="9">Cortex AI Service</text>
+  <rect x="935" y="358" width="12" height="12" fill="#11567F"/>
+  <text x="955" y="369" fill="#11567F" font-size="9">Dynamic Table (auto-refresh)</text>
+  <rect x="935" y="376" width="12" height="12" fill="white" stroke="#29B5E8"/>
+  <text x="955" y="387" fill="#11567F" font-size="9">Standard Table</text>
+  <rect x="935" y="394" width="12" height="12" fill="#D6EAF8"/>
+  <text x="955" y="405" fill="#11567F" font-size="9">Telemetry / Monitoring</text>
+</svg>

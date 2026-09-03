@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1400" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#29B5E8"/>
+    </marker>
+  </defs>
+
+  <!-- Outer container -->
+  <rect x="10" y="10" width="1380" height="1380" rx="8" fill="#F2FAFE" stroke="#11567F" stroke-width="3"/>
+
+  <!-- Title bars -->
+  <rect x="10" y="10" width="1090" height="55" fill="#11567F"/>
+  <text x="555" y="44" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="bold">IMAGERIGHT DOCUMENT INTELLIGENCE PIPELINE</text>
+  <rect x="1100" y="10" width="290" height="55" fill="#29B5E8" stroke="#0A3D62"/>
+  <text x="1245" y="44" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="bold">Snowflake Native</text>
+
+  <!-- 01 SOURCE SYSTEM -->
+  <rect x="30" y="80" width="1340" height="120" rx="4" fill="#EBF5FB" stroke="#29B5E8" stroke-width="2"/>
+  <text x="50" y="100" fill="#11567F" font-size="11" font-weight="bold">01  SOURCE SYSTEM</text>
+
+  <rect x="180" y="110" width="200" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="280" y="132" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">ImageRight</text>
+  <text x="280" y="148" text-anchor="middle" fill="#11567F" font-size="10">(Vertafore DMS)</text>
+  <text x="280" y="164" text-anchor="middle" fill="#11567F" font-size="10">Files / Drawers / Docs</text>
+
+  <rect x="500" y="110" width="200" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="600" y="132" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">REST API</text>
+  <text x="600" y="148" text-anchor="middle" fill="#11567F" font-size="10">Export Service</text>
+  <text x="600" y="164" text-anchor="middle" fill="#11567F" font-size="10">(Delta Sync)</text>
+
+  <rect x="820" y="110" width="200" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="920" y="132" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">TIFF Files</text>
+  <text x="920" y="148" text-anchor="middle" fill="#11567F" font-size="10">+ Metadata JSON</text>
+  <text x="920" y="164" text-anchor="middle" fill="#11567F" font-size="10">(Sidecar)</text>
+
+  <rect x="1100" y="110" width="220" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="1210" y="132" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">@imageright_stage</text>
+  <text x="1210" y="148" text-anchor="middle" fill="#11567F" font-size="10">Snowflake Internal Stage</text>
+  <text x="1210" y="164" text-anchor="middle" fill="#11567F" font-size="10">(Auto-Refresh)</text>
+
+  <!-- Arrows in layer 01 -->
+  <line x1="380" y1="145" x2="495" y2="145" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="145" x2="815" y2="145" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1020" y1="145" x2="1095" y2="145" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Arrow 01→02 -->
+  <line x1="700" y1="200" x2="700" y2="235" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 02 DOCUMENT PARSING -->
+  <rect x="30" y="240" width="1340" height="120" rx="4" fill="#29B5E8" stroke="#11567F" stroke-width="2"/>
+  <text x="50" y="260" fill="#FFFFFF" font-size="11" font-weight="bold">02  DOCUMENT PARSING (Cortex AI)</text>
+
+  <rect x="250" y="275" width="240" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="370" y="297" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">AI_PARSE_DOCUMENT</text>
+  <text x="370" y="313" text-anchor="middle" fill="#FFFFFF" font-size="10">OCR Mode</text>
+  <text x="370" y="329" text-anchor="middle" fill="#FFFFFF" font-size="10">(Fast Text Extraction)</text>
+
+  <rect x="560" y="275" width="240" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="680" y="297" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">AI_PARSE_DOCUMENT</text>
+  <text x="680" y="313" text-anchor="middle" fill="#FFFFFF" font-size="10">LAYOUT Mode</text>
+  <text x="680" y="329" text-anchor="middle" fill="#FFFFFF" font-size="10">(Tables + Structure)</text>
+
+  <rect x="870" y="275" width="240" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="990" y="297" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">Page Flattening</text>
+  <text x="990" y="313" text-anchor="middle" fill="#FFFFFF" font-size="10">1 row per page</text>
+  <text x="990" y="329" text-anchor="middle" fill="#FFFFFF" font-size="10">(LATERAL FLATTEN)</text>
+
+  <!-- Arrow 02→03 -->
+  <line x1="700" y1="360" x2="700" y2="395" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 03 AI ENRICHMENT -->
+  <rect x="30" y="400" width="1340" height="120" rx="4" fill="#29B5E8" stroke="#11567F" stroke-width="2"/>
+  <text x="50" y="420" fill="#FFFFFF" font-size="11" font-weight="bold">03  AI ENRICHMENT (Cortex AI)</text>
+
+  <rect x="200" y="435" width="260" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="330" y="457" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">AI_CLASSIFY</text>
+  <text x="330" y="473" text-anchor="middle" fill="#FFFFFF" font-size="10">Document Type</text>
+  <text x="330" y="489" text-anchor="middle" fill="#FFFFFF" font-size="10">(FNOL, Dec Page, Endorsement...)</text>
+
+  <rect x="540" y="435" width="280" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="680" y="457" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">AI_EXTRACT</text>
+  <text x="680" y="473" text-anchor="middle" fill="#FFFFFF" font-size="10">Key Attributes</text>
+  <text x="680" y="489" text-anchor="middle" fill="#FFFFFF" font-size="10">(Policy#, Claim#, Amounts, Dates)</text>
+
+  <rect x="900" y="435" width="260" height="65" rx="6" fill="#11567F" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="1030" y="457" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">IR Metadata Merge</text>
+  <text x="1030" y="473" text-anchor="middle" fill="#FFFFFF" font-size="10">Cross-reference</text>
+  <text x="1030" y="489" text-anchor="middle" fill="#FFFFFF" font-size="10">(UserKey1, UserKey2, Drawer)</text>
+
+  <!-- Arrow 03→04 -->
+  <line x1="700" y1="520" x2="700" y2="555" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 04 STRUCTURED STORAGE -->
+  <rect x="30" y="560" width="1340" height="120" rx="4" fill="#D6EAF8" stroke="#29B5E8" stroke-width="2"/>
+  <text x="50" y="580" fill="#11567F" font-size="11" font-weight="bold">04  STRUCTURED STORAGE</text>
+
+  <rect x="350" y="595" width="350" height="65" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="525" y="617" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">DOCUMENT_CATALOG</text>
+  <text x="525" y="633" text-anchor="middle" fill="#11567F" font-size="10">(Dynamic Table)</text>
+  <text x="525" y="649" text-anchor="middle" fill="#11567F" font-size="10">Structured attrs + Full text + IR metadata</text>
+
+  <rect x="780" y="595" width="250" height="65" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="905" y="617" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">DOCUMENT_PAGES</text>
+  <text x="905" y="633" text-anchor="middle" fill="#11567F" font-size="10">(1 row per page)</text>
+  <text x="905" y="649" text-anchor="middle" fill="#11567F" font-size="10">Granular content</text>
+
+  <!-- Arrows 04→05 -->
+  <line x1="450" y1="680" x2="450" y2="715" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="950" y1="680" x2="950" y2="715" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 05 INTELLIGENCE SERVICES -->
+  <rect x="30" y="720" width="1340" height="130" rx="4" fill="#11567F" stroke="#0A1428" stroke-width="2"/>
+  <text x="50" y="742" fill="#FFFFFF" font-size="11" font-weight="bold">05  INTELLIGENCE SERVICES</text>
+
+  <rect x="200" y="760" width="280" height="70" rx="6" fill="#29B5E8" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="340" y="785" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">Cortex Search Service</text>
+  <text x="340" y="801" text-anchor="middle" fill="#FFFFFF" font-size="10">Hybrid Vector + Keyword</text>
+  <text x="340" y="817" text-anchor="middle" fill="#FFFFFF" font-size="10">(RAG Retrieval Engine)</text>
+
+  <rect x="560" y="760" width="280" height="70" rx="6" fill="#29B5E8" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="700" y="785" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">Semantic View</text>
+  <text x="700" y="801" text-anchor="middle" fill="#FFFFFF" font-size="10">Cortex Analyst</text>
+  <text x="700" y="817" text-anchor="middle" fill="#FFFFFF" font-size="10">(Natural Language → SQL)</text>
+
+  <rect x="920" y="760" width="220" height="70" rx="6" fill="#29B5E8" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="1030" y="785" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">Embedding Model</text>
+  <text x="1030" y="801" text-anchor="middle" fill="#FFFFFF" font-size="10">snowflake-arctic-</text>
+  <text x="1030" y="817" text-anchor="middle" fill="#FFFFFF" font-size="10">embed-l-v2.0</text>
+
+  <!-- Arrow 05→06 -->
+  <line x1="700" y1="850" x2="700" y2="885" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 06 CORTEX AGENT -->
+  <rect x="30" y="890" width="1340" height="130" rx="4" fill="#1A3A5C" stroke="#0A1428" stroke-width="2"/>
+  <text x="50" y="912" fill="#FFFFFF" font-size="11" font-weight="bold">06  CORTEX AGENT (CoWork)</text>
+
+  <rect x="350" y="930" width="380" height="70" rx="6" fill="#29B5E8" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="540" y="955" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="bold">Document Intelligence Agent</text>
+  <text x="540" y="973" text-anchor="middle" fill="#FFFFFF" font-size="10">Dynamic Routing: Search ↔ Analytics</text>
+  <text x="540" y="989" text-anchor="middle" fill="#FFFFFF" font-size="10">Insurance-Aware Instructions</text>
+
+  <rect x="820" y="930" width="220" height="70" rx="6" fill="#29B5E8" stroke="#E8F6FD" stroke-width="2"/>
+  <text x="930" y="955" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="bold">LLM</text>
+  <text x="930" y="973" text-anchor="middle" fill="#FFFFFF" font-size="10">claude-sonnet-4</text>
+  <text x="930" y="989" text-anchor="middle" fill="#FFFFFF" font-size="10">(Response Generation)</text>
+
+  <!-- Arrow 06→07 -->
+  <line x1="700" y1="1020" x2="700" y2="1055" stroke="#29B5E8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 07 END USERS -->
+  <rect x="30" y="1060" width="1340" height="130" rx="4" fill="#EBF5FB" stroke="#29B5E8" stroke-width="2"/>
+  <text x="50" y="1082" fill="#11567F" font-size="11" font-weight="bold">07  END USERS (Natural Language via CoWork)</text>
+
+  <rect x="130" y="1100" width="250" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="255" y="1122" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Claims Adjusters</text>
+  <text x="255" y="1138" text-anchor="middle" fill="#11567F" font-size="9">"Find FNOL for Johnson claim"</text>
+  <text x="255" y="1154" text-anchor="middle" fill="#11567F" font-size="9">"What reserves are set?"</text>
+
+  <rect x="430" y="1100" width="270" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="565" y="1122" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Underwriters</text>
+  <text x="565" y="1138" text-anchor="middle" fill="#11567F" font-size="9">"Show submissions this month"</text>
+  <text x="565" y="1154" text-anchor="middle" fill="#11567F" font-size="9">"Coverage exclusions for flood?"</text>
+
+  <rect x="750" y="1100" width="280" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="890" y="1122" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Operations / Mgmt</text>
+  <text x="890" y="1138" text-anchor="middle" fill="#11567F" font-size="9">"How many open claims &gt; $100K?"</text>
+  <text x="890" y="1154" text-anchor="middle" fill="#11567F" font-size="9">"Trend in submissions by month"</text>
+
+  <rect x="1080" y="1100" width="200" height="70" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="1180" y="1122" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Any User (CoWork)</text>
+  <text x="1180" y="1138" text-anchor="middle" fill="#11567F" font-size="9">Open-ended questions</text>
+  <text x="1180" y="1154" text-anchor="middle" fill="#11567F" font-size="9">NOT predefined</text>
+
+  <!-- 08 ORCHESTRATION -->
+  <rect x="30" y="1230" width="1340" height="100" rx="4" fill="#D6EAF8" stroke="#29B5E8" stroke-width="2"/>
+  <text x="50" y="1252" fill="#11567F" font-size="11" font-weight="bold">08  ORCHESTRATION</text>
+
+  <rect x="200" y="1262" width="200" height="50" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="300" y="1284" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Dynamic Tables</text>
+  <text x="300" y="1300" text-anchor="middle" fill="#11567F" font-size="10">TARGET_LAG = '1 hour'</text>
+
+  <rect x="480" y="1262" width="200" height="50" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="580" y="1284" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Streams + Tasks</text>
+  <text x="580" y="1300" text-anchor="middle" fill="#11567F" font-size="10">New file detection</text>
+
+  <rect x="760" y="1262" width="200" height="50" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="860" y="1284" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Warehouse</text>
+  <text x="860" y="1300" text-anchor="middle" fill="#11567F" font-size="10">MEDIUM (doc processing)</text>
+
+  <rect x="1040" y="1262" width="200" height="50" rx="6" fill="#FFFFFF" stroke="#29B5E8" stroke-width="2"/>
+  <text x="1140" y="1284" text-anchor="middle" fill="#11567F" font-size="11" font-weight="bold">Security</text>
+  <text x="1140" y="1300" text-anchor="middle" fill="#11567F" font-size="10">RBAC + Row-Level</text>
+</svg>
