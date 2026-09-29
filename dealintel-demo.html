@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="snowflake-source" content="cortex-agent-authored" />
+  <title>DealIntel — Interactive Demo</title>
+  <script type="application/json" id="snowflake-report-metadata">
+  {
+    "generated": "2026-09-29",
+    "intent": "Clickable static prototype of the DealIntel document intelligence app for customer demos",
+    "dataSources": [{ "type": "static", "notes": "All data is fictional mock data embedded in js/data.js" }],
+    "producerNotes": "Built from demo/ source files via demo/build.py; edit the sources and rebuild."
+  }
+  </script>
+  <style>
+/* DealIntel demo — theme, layout, components */
+:root {
+  --brand-primary: #C5A55A; --brand-dark: #1B2A4A; --brand-bg: #0F1B2D;
+  --brand-light: #F6F0E1; --brand-pale: #FBF8F0;
+  --surface: #fff; --surface-alt: #f8fafc; --surface-hover: #f1f5f9;
+  --border: #e2e8f0; --text: #1a2740; --text-2: #475569; --muted: #94a3b8;
+  --chart-1: #29B5E8; --chart-2: #11567F;
+}
+html.dark {
+  --surface: #1e293b; --surface-alt: #0f172a; --surface-hover: #334155;
+  --border: #475569; --text: #e2e8f0; --text-2: #cbd5e1; --muted: #94a3b8;
+  --brand-light: #2b3446; --brand-pale: #232c3d;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: Inter, -apple-system, system-ui, "Segoe UI", sans-serif; font-size: 14px; color: var(--text); background: var(--surface-alt); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+input, select, textarea { font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--brand-primary); outline-offset: -1px; }
+svg { max-width: 100%; }
+
+/* Demo banner */
+#demo-banner { position: fixed; top: 0; left: 0; right: 0; height: 28px; z-index: 60; display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--brand-dark); color: #fff; font-size: 12px; }
+#demo-banner b { color: var(--brand-primary); }
+
+/* Layout */
+#app { display: flex; height: 100vh; padding-top: 28px; }
+#sidebar { width: 240px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
+#main-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+#app-header { height: 48px; flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+#content { flex: 1; overflow: auto; padding: 24px; }
+.page-wrap { margin: 0 auto; width: 100%; }
+.w-3xl { max-width: 768px; } .w-4xl { max-width: 896px; } .w-5xl { max-width: 1024px; } .w-6xl { max-width: 1152px; } .w-7xl { max-width: 1280px; }
+#menu-toggle { display: none; background: none; border: 0; font-size: 20px; color: var(--text); }
+
+/* Sidebar */
+.brand { display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.brand-logo { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--brand-dark), var(--brand-bg)); display: grid; place-items: center; color: var(--brand-primary); font-weight: 800; }
+.brand-name { font-weight: 700; color: var(--brand-primary); }
+.brand-sub { font-size: 10px; color: var(--muted); }
+.nav { padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+.nav-link { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-weight: 500; color: var(--text-2); }
+.nav-link:hover, .nav-link.active { background: var(--brand-light); color: var(--brand-dark); }
+html.dark .nav-link:hover, html.dark .nav-link.active { color: var(--brand-primary); }
+.nav-link .ico { width: 18px; text-align: center; }
+.nav-count { margin-left: auto; background: #f59e0b; color: #fff; font-size: 9px; font-weight: 700; border-radius: 999px; padding: 1px 6px; }
+.nav-section { margin: 12px 12px 4px; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; }
+.nav-group { margin: 8px 12px 2px; font-size: 9px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* Header */
+.hdr-title { font-size: 13px; color: var(--text-2); }
+.hdr-right { display: flex; align-items: center; gap: 10px; position: relative; }
+.admin-pill { background: var(--brand-dark); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--brand-primary); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+.user-btn { display: flex; align-items: center; gap: 6px; background: none; border: 0; color: var(--text-2); }
+.dropdown { position: absolute; right: 0; top: 40px; width: 256px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.12); z-index: 50; display: none; overflow: hidden; }
+.dropdown.open { display: block; }
+.dd-sec { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.dd-sec:first-child { background: var(--surface-alt); }
+.seg { display: flex; gap: 4px; }
+.seg button { flex: 1; font-size: 12px; padding: 5px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-2); }
+.seg button.on { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
+
+/* Components */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.p4 { padding: 16px; } .p5 { padding: 20px; } .p6 { padding: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; border: 1px solid transparent; white-space: nowrap; }
+.btn-primary { background: var(--brand-primary); color: #fff; } .btn-primary:hover { filter: brightness(.92); }
+.btn-secondary { background: var(--surface); border-color: var(--border); color: var(--text-2); font-weight: 500; } .btn-secondary:hover { background: var(--surface-hover); }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-ghost { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; font-weight: 500; }
+.btn-ghost:hover { background: rgba(255,255,255,.2); }
+.btn-green { background: #f0fdf4; border-color: #86efac; color: #15803d; }
+.btn-amber { background: #fffbeb; border-color: #fcd34d; color: #b45309; }
+.btn-red { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; background: var(--surface-hover); color: var(--text-2); }
+.mono { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+.muted { color: var(--muted); } .sub { color: var(--text-2); font-size: 12px; }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.between { justify-content: space-between; }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.mt { margin-top: 16px; } .mt2 { margin-top: 24px; } .mb { margin-bottom: 16px; }
+.link { color: #2563eb; } .link:hover { text-decoration: underline; }
+.gold { color: var(--brand-primary); }
+
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.page-header h1 { margin: 0; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+.page-header h1 .ico { color: var(--brand-primary); }
+.page-header p { margin: 4px 0 0; font-size: 12px; color: var(--text-2); }
+.section-title { font-size: 15px; font-weight: 600; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+
+.stat .lbl { font-size: 12px; color: var(--text-2); }
+.stat .val { font-size: 24px; font-weight: 700; margin-top: 4px; }
+.stat .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; overflow-x: auto; }
+.tab { padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--text-2); background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.tab.active { color: var(--brand-primary); border-bottom-color: var(--brand-primary); }
+.tab .cnt { margin-left: 6px; font-size: 10px; background: var(--surface-hover); padding: 1px 6px; border-radius: 999px; }
+.tab .cnt.hot { background: #fef3c7; color: #b45309; }
+.tab-panel { display: none; } .tab-panel.active { display: block; }
+.segtabs { display: inline-flex; background: var(--surface-hover); padding: 4px; border-radius: 10px; gap: 4px; margin-bottom: 16px; }
+.segtabs .tab { border: 0; border-radius: 7px; margin: 0; }
+.segtabs .tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table.t { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.t th { text-align: left; font-weight: 600; color: var(--text-2); background: var(--surface-alt); padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; position: sticky; top: 0; }
+table.t td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+table.t tr.clickable { cursor: pointer; }
+table.t tbody tr:hover { background: var(--surface-hover); }
+table.t tr.sel { background: var(--brand-light) !important; }
+table.t tr.review { background: rgba(254,243,199,.35); }
+html.dark table.t tr.review { background: rgba(245,158,11,.10); }
+html.dark .admin-pill { background: var(--brand-primary); color: var(--brand-bg); }
+
+/* Status boxes */
+.note { padding: 10px 12px; border-radius: 8px; font-size: 12px; }
+.note-amber { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+.note-red { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.note-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+.note-green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+html.dark .note-amber { background: #422006; color: #fde68a; border-color: #78350f; }
+html.dark .note-red { background: #450a0a; color: #fecaca; border-color: #7f1d1d; }
+html.dark .note-blue { background: #172554; color: #bfdbfe; border-color: #1e3a8a; }
+html.dark .note-green { background: #052e16; color: #bbf7d0; border-color: #14532d; }
+
+/* Key/value */
+.kv { display: grid; grid-template-columns: 120px 1fr; gap: 6px 12px; font-size: 12px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; font-weight: 500; }
+.lbl-up { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+
+/* Hero */
+.hero { border-radius: 16px; padding: 24px; color: #fff; background: linear-gradient(135deg, var(--brand-bg), var(--brand-dark)); }
+.hero h2 { margin: 0; font-size: 24px; }
+.hero p { margin: 6px 0 16px; color: #bfdbfe; font-size: 13px; }
+
+/* Side panel & split */
+.split { display: flex; gap: 16px; align-items: flex-start; }
+.split > .main { flex: 1; min-width: 0; }
+.side-panel { width: 320px; flex-shrink: 0; position: sticky; top: 0; }
+
+/* Confidence bar */
+.conf { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+.conf .bar { width: 60px; height: 6px; border-radius: 3px; background: rgba(0,0,0,.08); overflow: hidden; }
+.conf .bar i { display: block; height: 100%; }
+
+/* Toggle switch */
+.switch { width: 36px; height: 20px; border-radius: 999px; background: #cbd5e1; border: 0; position: relative; flex-shrink: 0; transition: background .15s; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left .15s; }
+.switch.on { background: #22c55e; } .switch.on::after { left: 18px; }
+
+/* Chat */
+.msg { display: flex; gap: 10px; margin-bottom: 18px; }
+.msg.user { flex-direction: row-reverse; }
+.msg .av { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; font-size: 14px; }
+.msg.user .av { background: var(--brand-primary); color: #fff; }
+.msg.bot .av { background: var(--brand-light); }
+.bubble { max-width: 85%; padding: 12px 14px; border-radius: 16px; font-size: 13px; line-height: 1.55; }
+.msg.user .bubble { background: var(--brand-dark); color: #fff; }
+.msg.bot .bubble { background: var(--surface); border: 1px solid var(--border); }
+.bubble table { border-collapse: collapse; margin: 8px 0; font-size: 12px; }
+.bubble th, .bubble td { border: 1px solid var(--border); padding: 4px 8px; text-align: left; }
+.cite { display: inline-block; font-size: 11px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 0 6px; border-radius: 6px; margin: 0 2px; cursor: pointer; }
+.via { font-size: 11px; background: var(--brand-pale); border: 1px solid var(--border); padding: 1px 8px; border-radius: 999px; color: var(--text-2); display: inline-block; margin-bottom: 6px; }
+.dots span { display: inline-block; width: 7px; height: 7px; margin: 0 2px; border-radius: 50%; background: var(--brand-primary); animation: bounce 1s infinite; }
+.dots span:nth-child(2) { animation-delay: .15s; } .dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+
+/* Timeline */
+.tl { position: relative; padding-left: 36px; }
+.tl::before { content: ""; position: absolute; left: 11px; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 18px; }
+.tl-dot { position: absolute; left: -36px; top: 0; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 12px; }
+
+/* Doc viewer placeholder */
+.pdf { background: var(--surface-hover); border-radius: 8px; padding: 20px; display: flex; justify-content: center; }
+.pdf-page { background: #fff; color: #1f2937; width: 100%; max-width: 520px; min-height: 560px; padding: 36px; box-shadow: 0 4px 16px rgba(0,0,0,.12); font-size: 11px; line-height: 1.6; font-family: Georgia, serif; }
+.pdf-page h3 { font-family: Inter, sans-serif; font-size: 14px; margin: 0 0 4px; }
+mark { background: #fde68a; color: inherit; padding: 0 2px; border-radius: 2px; }
+mark.m-id { background: #dbeafe; } mark.m-party { background: #dcfce7; } mark.m-date { background: #ede9fe; } mark.m-money { background: #fef3c7; } mark.m-cls { background: #ccfbf1; }
+pre.raw { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 12px; white-space: pre-wrap; line-height: 1.6; max-height: 520px; overflow: auto; }
+
+/* Modal & toast */
+#modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(3px); z-index: 70; display: none; align-items: center; justify-content: center; padding: 20px; }
+#modal.open { display: flex; }
+.modal-box { background: var(--surface); border-radius: 12px; width: min(90vw, 1024px); max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.modal-body { overflow: auto; }
+#toasts { position: fixed; right: 20px; bottom: 20px; z-index: 80; display: flex; flex-direction: column; gap: 8px; }
+.toast { min-width: 280px; max-width: 380px; padding: 12px 14px; border-radius: 12px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.12); animation: slidein .2s; }
+.toast.success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.toast.info { background: var(--brand-pale); color: var(--text); border: 1px solid var(--border); }
+@keyframes slidein { from { transform: translateY(10px); opacity: 0; } }
+
+/* Charts */
+.chart-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+.chart svg text { fill: var(--text-2); font-size: 11px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 11px; color: var(--text-2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+
+/* Misc */
+.dropzone { border: 2px dashed var(--border); border-radius: 12px; padding: 40px; text-align: center; color: var(--text-2); }
+.list-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.list-row:last-child { border-bottom: 0; }
+.empty { text-align: center; padding: 40px; color: var(--muted); }
+.fade { opacity: .55; }
+.hidden { display: none !important; }
+.fmt { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; }
+.fmt-PDF { background: #fee2e2; color: #b91c1c; } .fmt-DOCX { background: #dbeafe; color: #1d4ed8; } .fmt-TIFF { background: #ede9fe; color: #6d28d9; } .fmt-PNG, .fmt-JPEG { background: #fef3c7; color: #b45309; }
+
+@media (max-width: 900px) {
+  #sidebar { position: fixed; top: 28px; bottom: 0; left: 0; z-index: 55; transform: translateX(-100%); transition: transform .2s; }
+  #sidebar.open { transform: none; box-shadow: 4px 0 20px rgba(0,0,0,.2); }
+  #menu-toggle { display: block; }
+  .split { flex-direction: column; }
+  .side-panel { width: 100%; position: static; }
+  #content { padding: 16px; }
+}
+
+</style>
+</head>
+<body>
+  <div id="demo-banner"><b>Interactive Demo</b> · Static sample data — no live Snowflake connection</div>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">D</div>
+        <div><div class="brand-name">DealIntel</div><div class="brand-sub">Infrastructure Investments</div></div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+    <div id="main-area">
+      <header id="app-header">
+        <div class="row"><button id="menu-toggle" aria-label="Menu">☰</button><span class="hdr-title" id="hdr-title">Overview</span></div>
+        <div class="hdr-right">
+          <span class="admin-pill">ADMIN</span>
+          <button class="user-btn" id="user-btn"><span class="avatar">JD</span>▾</button>
+          <div class="dropdown" id="user-dd">
+            <div class="dd-sec"><div style="font-weight:600">Jordan Davis</div><div class="sub">Deal Team · DEAL_INTEL_ADMIN</div></div>
+            <div class="dd-sec"><div class="lbl-up" style="margin-bottom:6px">🕐 Timezone</div>
+              <select style="width:100%"><option>Eastern (ET)</option><option>Central (CT)</option><option>Mountain (MT)</option><option>Pacific (PT)</option><option>UTC</option><option>London</option></select></div>
+            <div class="dd-sec"><div class="lbl-up" style="margin-bottom:6px">Theme</div>
+              <div class="seg" id="theme-seg"><button data-theme="light" class="on">☀ Light</button><button data-theme="dark">☾ Dark</button><button data-theme="system">⚙ System</button></div></div>
+            <div class="dd-sec"><a href="#" id="signout" style="color:#dc2626">⎋ Sign Out</a></div>
+          </div>
+        </div>
+      </header>
+      <main id="content"></main>
+    </div>
+  </div>
+
+  <div id="modal"><div class="modal-box">
+    <div class="modal-head"><span>📄</span><span class="mono" id="modal-title" style="flex:1"></span>
+      <button class="btn btn-primary btn-sm" id="modal-dl">⬇ Download</button>
+      <button class="btn btn-secondary btn-sm" id="modal-close">✕</button></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div></div>
+  <div id="toasts"></div>
+
+  <script>
+/* DealIntel demo — fictional mock data */
+window.DATA = (function () {
+  const docs = [
+    { id: 1, file: '0001-DINFRA-ic_presentation-hyperscale-2024.pdf', type: 'IC Presentation', folder: 'Deal Sourcing', company: 'Hyperscale Data Centers, LLC', deal: 'Project Hyperscale', sponsor: 'Summit Ridge Partners', sector: 'Digital Infrastructure', stage: 'IC Review', status: 'pending IC', fmt: 'PDF', conf: 0.94, invDate: '2024-04-01', exitDate: '2028-10-01', code: 'DINFRA-2024-001', fund: 'Infrastructure Fund V', pages: 45, ev: '$2.8B', equity: '$1.4B', irr: '18-22%', moic: '2.2-2.5x', coinv: 'GIC, ADIA', risks: 'Power availability, construction cost inflation, customer concentration', action: 'IC approval to submit binding bid by March 22, 2024', summary: 'IC presentation for 100% acquisition of Hyperscale Data Centers, a North American hyperscale/colo platform. $2.8B TEV with $1.4B equity from Fund V plus co-invest.' },
+    { id: 2, file: '0002-TRANS-term_sheet-gateway-2024.pdf', type: 'Term Sheet', folder: 'Transaction', company: 'Gateway Logistics Holdings', deal: 'Project Gateway', sponsor: 'Summit Ridge Partners', sector: 'Transportation & Logistics', stage: 'Closing', status: 'draft', fmt: 'PDF', conf: 0.91, invDate: '2024-06-01', exitDate: '2027-06-01', code: 'TRANS-2024-003', fund: 'Infrastructure Fund IV', pages: 8, ev: '$425M', equity: '$215M', irr: '15-18%', moic: '1.8-2.0x', coinv: '—', risks: 'HSR clearance timeline, lender consent, customer retention', action: 'GP approval, then execute exclusivity agreement', summary: 'Non-binding term sheet for $425M add-on acquisition of Gateway Logistics by TransPeak (Fund IV portco). 10.5x EBITDA entry with $30M identified synergies.' },
+    { id: 3, file: '0003-ENERGY-dd_report-solaris-2024.pdf', type: 'Technical DD', folder: 'Due Diligence', company: 'Solaris Energy Partners, LLC', deal: 'Project Solaris', sponsor: 'Summit Ridge Partners', sector: 'Energy Transition', stage: 'Due Diligence', status: 'final', fmt: 'PDF', conf: 0.88, invDate: '2024-09-15', exitDate: '2029-09-15', code: 'ENERGY-2024-002', fund: 'Infrastructure Fund V', pages: 78, ev: '$1.9B', equity: '$950M', irr: '14-17%', moic: '1.9-2.2x', coinv: 'CPP Investments', risks: 'Interconnection queue delays, IRA credit transferability pricing', action: 'Proceed subject to reps on interconnection milestones', summary: 'Independent technical DD on Solaris (2.1GW solar + 480MWh storage operating, 4.5GW pipeline). Positive findings on operating performance.' },
+    { id: 4, file: '0004-MULTI-lp_report-fund_iv_q1-2024.pdf', type: 'LP Report', folder: 'Investor Relations', company: '—', deal: '—', sponsor: 'Summit Ridge Partners', sector: 'Multi-Sector Platform', stage: 'Portfolio', status: 'final', fmt: 'PDF', conf: 0.97, invDate: '2024-05-01', exitDate: '—', code: 'FUND-IV-Q1', fund: 'Infrastructure Fund IV', pages: 32, ev: '—', equity: '$11.2B deployed', irr: '16.2% net', moic: '1.45x TVPI', coinv: '—', risks: 'Rate environment impact on exit multiples', action: 'Distribute to LPs by May 15', summary: 'Q1 2024 LP report for Infrastructure Fund IV ($14B, 2020 vintage). 80% deployed at 1.45x TVPI / 16.2% net IRR across 6 portfolio companies.' },
+    { id: 5, file: '0005-DINFRA-board_deck-meridian-q2.pptx.pdf', type: 'Board Deck', folder: 'Portfolio', company: 'Meridian Fiber Networks', deal: 'Project Meridian', sponsor: 'Summit Ridge Partners', sector: 'Digital Infrastructure', stage: 'Portfolio', status: 'active', fmt: 'PDF', conf: 0.82, invDate: '2021-09-01', exitDate: '2026-09-01', code: 'DINFRA-2021-004', fund: 'Infrastructure Fund IV', pages: 36, ev: '$3.1B', equity: '$1.2B', irr: '19% gross', moic: '1.8x', coinv: 'OMERS', risks: 'Fiber build pace, take-rate ramp in Tier 3 markets', action: 'Approve 2025 capex budget', summary: 'Q2 board deck for Meridian Fiber. 410k passings added YTD, EBITDA +22% YoY; management requests $180M incremental capex.' },
+    { id: 6, file: '0006-WATER-valuation_memo-clearwater-2024.docx', type: 'Valuation Memo', folder: 'Portfolio', company: 'ClearWater Systems', deal: 'Project ClearWater', sponsor: 'Summit Ridge Partners', sector: 'Water & Environmental', stage: 'Portfolio', status: 'approved', fmt: 'DOCX', conf: 0.79, invDate: '2022-03-01', exitDate: '2027-03-01', code: 'WATER-2022-001', fund: 'Infrastructure Fund IV', pages: 14, ev: '$1.3B', equity: '$850M', irr: '12% gross', moic: '1.4x', coinv: '—', risks: 'Regulatory rate-case outcomes', action: 'Mark approved by valuation committee', summary: 'Q2 valuation memo marking ClearWater at 1.4x MOIC using DCF and regulated utility comps.' },
+    { id: 7, file: '0007-COMM-ic_presentation-northstar-2023.pdf', type: 'IC Presentation', folder: 'Deal Sourcing', company: 'NorthStar Towers', deal: 'Project NorthStar', sponsor: 'Summit Ridge Partners', sector: 'Communications', stage: 'Closed', status: 'closed', fmt: 'PDF', conf: 0.93, invDate: '2023-06-01', exitDate: '2030-06-01', code: 'COMM-2023-002', fund: 'Infrastructure Fund IV', pages: 52, ev: '$4.6B', equity: '$2.0B', irr: '13-15%', moic: '1.9x', coinv: 'Mubadala', risks: 'Carrier consolidation, lease escalator renegotiation', action: '—', summary: 'IC presentation for $4.6B acquisition of 6,800 macro towers with long-term MNO leases.' },
+    { id: 8, file: '0008-ENERGY-commercial_dd-sunbridge-2024.pdf', type: 'Commercial DD', folder: 'Due Diligence', company: 'SunBridge Energy', deal: 'Project SunBridge', sponsor: 'Summit Ridge Partners', sector: 'Energy Transition', stage: 'Due Diligence', status: 'draft', fmt: 'PDF', conf: 0.58, invDate: '2024-11-01', exitDate: '—', code: 'ENERGY-2024-005', fund: 'Infrastructure Fund V', pages: 64, ev: '$780M', equity: '$390M', irr: '15%', moic: '2.0x', coinv: '—', risks: 'Merchant price exposure in ERCOT, PPA re-contracting', action: 'Advisor to finalize price curve sensitivity', summary: 'Draft commercial DD on SunBridge distributed solar platform; key open item is merchant tail pricing.' },
+    { id: 9, file: '0009-TRANS-spa-pacific_ports-2023.pdf', type: 'SPA', folder: 'Transaction', company: 'Pacific Ports Group', deal: 'Project Pacific', sponsor: 'Summit Ridge Partners', sector: 'Transportation & Logistics', stage: 'Closed', status: 'final', fmt: 'PDF', conf: 0.9, invDate: '2023-11-15', exitDate: '2030-11-15', code: 'TRANS-2023-007', fund: 'Infrastructure Fund IV', pages: 118, ev: '$3.4B', equity: '$1.5B', irr: '14%', moic: '2.1x', coinv: 'QIA', risks: 'Throughput volatility, labor agreement renewal 2025', action: '—', summary: 'Executed share purchase agreement for 3 West Coast container terminals.' },
+    { id: 10, file: '0010-TRANS-quarterly_report-transpeak-q2.pdf', type: 'Quarterly Report', folder: 'Portfolio', company: 'TransPeak Logistics', deal: 'Project TransPeak', sponsor: 'Summit Ridge Partners', sector: 'Transportation & Logistics', stage: 'Portfolio', status: 'active', fmt: 'PDF', conf: 0.86, invDate: '2021-06-01', exitDate: '2026-06-01', code: 'TRANS-2021-001', fund: 'Infrastructure Fund IV', pages: 22, ev: '$2.2B', equity: '$1.8B', irr: '17% gross', moic: '1.6x', coinv: '—', risks: 'Freight volume softness', action: 'Monitor Gateway integration', summary: 'TransPeak Q2 report: revenue +9%, EBITDA margin 24.1%, Gateway add-on integration on plan.' },
+    { id: 11, file: '0011-DINFRA-credit_agreement-meridian-2024.pdf', type: 'Credit Agreement', folder: 'Transaction', company: 'Meridian Fiber Networks', deal: 'Project Meridian', sponsor: 'Summit Ridge Partners', sector: 'Digital Infrastructure', stage: 'Portfolio', status: 'final', fmt: 'PDF', conf: 0.47, invDate: '2024-02-10', exitDate: '2031-02-10', code: 'DINFRA-2021-004', fund: 'Infrastructure Fund IV', pages: 204, ev: '—', equity: '—', irr: '—', moic: '—', coinv: '—', risks: 'Leverage covenant 6.5x step-down in 2026', action: 'Covenant compliance certificate due quarterly', summary: '$1.6B term loan B refinancing for Meridian; SOFR + 325bps, 7-year maturity.' },
+    { id: 12, file: '0012-MULTI-capital_call-fund_v-2024.pdf', type: 'Capital Call Notice', folder: 'Investor Relations', company: '—', deal: '—', sponsor: 'Summit Ridge Partners', sector: 'Multi-Sector Platform', stage: 'Portfolio', status: 'final', fmt: 'PDF', conf: 0.96, invDate: '2024-03-20', exitDate: '—', code: 'FUND-V-CC07', fund: 'Infrastructure Fund V', pages: 4, ev: '—', equity: '$620M called', irr: '—', moic: '—', coinv: '—', risks: '—', action: 'LP funding due April 3, 2024', summary: 'Capital call #7 for Fund V ($620M) to fund Project Hyperscale deposit and Solaris DD costs.' },
+    { id: 13, file: '0013-DINFRA-esg_report-hyperscale-2024.tiff', type: 'ESG Report', folder: 'Compliance', company: 'Hyperscale Data Centers, LLC', deal: 'Project Hyperscale', sponsor: 'Summit Ridge Partners', sector: 'Digital Infrastructure', stage: 'IC Review', status: 'draft', fmt: 'TIFF', conf: 0.62, invDate: '—', exitDate: '—', code: 'DINFRA-2024-001', fund: 'Infrastructure Fund V', pages: 18, ev: '—', equity: '—', irr: '—', moic: '—', coinv: '—', risks: 'Water usage effectiveness above peer median', action: 'ESG committee sign-off', summary: 'ESG diligence report: PUE 1.32, 64% renewable PPA coverage, water-usage improvement plan required.' },
+    { id: 14, file: '0014-ENERGY-financial_model-solaris-v7.xlsx.pdf', type: 'Financial Model', folder: 'Due Diligence', company: 'Solaris Energy Partners, LLC', deal: 'Project Solaris', sponsor: 'Summit Ridge Partners', sector: 'Energy Transition', stage: 'Due Diligence', status: 'draft', fmt: 'PDF', conf: 0.71, invDate: '2024-09-15', exitDate: '2029-09-15', code: 'ENERGY-2024-002', fund: 'Infrastructure Fund V', pages: 12, ev: '$1.9B', equity: '$950M', irr: '15.8% base', moic: '2.0x', coinv: 'CPP Investments', risks: 'Terminal value sensitivity to merchant curve', action: 'Update with final DD capex', summary: 'Base-case model v7: 15.8% levered IRR, downside 11.2%, upside 19.4%.' },
+    { id: 15, file: '0015-TRANS-legal_dd-gateway-2024.docx', type: 'Legal DD', folder: 'Due Diligence', company: 'Gateway Logistics Holdings', deal: 'Project Gateway', sponsor: 'Summit Ridge Partners', sector: 'Transportation & Logistics', stage: 'Closing', status: 'final', fmt: 'DOCX', conf: 0.53, invDate: '2024-06-01', exitDate: '—', code: 'TRANS-2024-003', fund: 'Infrastructure Fund IV', pages: 41, ev: '$425M', equity: '—', irr: '—', moic: '—', coinv: '—', risks: 'Change-of-control consents on 3 customer contracts', action: 'Obtain consents pre-signing', summary: 'Legal DD memo on Gateway: no material litigation; 3 key customer contracts require change-of-control consent.' },
+  ];
+  docs.forEach(d => { d.review = d.conf < 0.75; d.pii = d.id === 11 || d.id === 15; });
+
+  const sectors = [
+    { code: 'DINFRA', name: 'Digital Infrastructure', desc: 'Data centers, fiber, towers adjacent', active: true, def: true },
+    { code: 'TRANS', name: 'Transportation & Logistics', desc: 'Ports, rail, logistics platforms', active: true },
+    { code: 'ENERGY', name: 'Energy Transition', desc: 'Renewables, storage, EV charging', active: true },
+    { code: 'WATER', name: 'Water & Environmental', desc: 'Regulated water, waste management', active: true },
+    { code: 'SOCIAL', name: 'Social Infrastructure', desc: 'Healthcare, education facilities', active: true },
+    { code: 'COMM', name: 'Communications', desc: 'Towers, satellite, spectrum', active: true },
+    { code: 'POWER', name: 'Conventional Power', desc: 'Gas-fired generation, midstream', active: false },
+    { code: 'MULTI', name: 'Multi-Sector Platform', desc: 'Fund-level and cross-sector documents', active: true },
+  ];
+
+  const labels = {
+    'Deal Sourcing': ['Investment Memo', 'Teaser / CIM', 'IC Presentation', 'Term Sheet', 'Management Presentation'],
+    'Due Diligence': ['Technical DD', 'Commercial DD', 'Legal DD', 'Tax DD', 'Environmental DD', 'Financial Model'],
+    'Transaction': ['SPA', 'Credit Agreement', 'Shareholders Agreement', 'Side Letter', 'Closing Checklist'],
+    'Portfolio': ['Board Deck', 'Quarterly Report', 'Valuation Memo', 'Budget / Forecast', 'Exit Readiness'],
+    'Investor Relations': ['LP Report', 'Capital Call Notice', 'Distribution Notice', 'Investor Letter', 'PPM'],
+    'Compliance': ['ESG Report', 'HSR Filing', 'CFIUS Notice', 'Compliance Certificate'],
+  };
+
+  const savedSearches = [
+    { name: 'Data center DD risks', q: 'data center acquisition due diligence risks', date: '2024-09-12' },
+    { name: 'Fund V capital calls', q: 'capital call notice Fund V', date: '2024-09-03' },
+    { name: 'Interconnection delays', q: 'interconnection queue delay solar storage', date: '2024-08-21' },
+    { name: 'Change of control consents', q: 'change of control consent customer contracts', date: '2024-08-02' },
+  ];
+  const bookmarks = [
+    { doc: 1, note: 'Key IC deck for Hyperscale — reference for Q4 pipeline review', date: '2024-09-10' },
+    { doc: 3, note: 'Good template for technical DD scope', date: '2024-08-30' },
+    { doc: 4, note: 'Latest Fund IV performance numbers', date: '2024-08-14' },
+  ];
+
+  const tasks = [
+    { name: 'task_01_register_files', state: 'started', sched: 'Every 15 minutes' },
+    { name: 'task_02_parse_documents', state: 'started', sched: 'After task_01' },
+    { name: 'task_03_classify_documents', state: 'started', sched: 'After task_02' },
+    { name: 'task_04_extract_attributes', state: 'started', sched: 'After task_03' },
+    { name: 'task_05_emit_metrics', state: 'suspended', sched: 'Every 1 hour' },
+  ];
+
+  const registry = docs.map((d, i) => ({ file: d.file, fmt: d.fmt, folder: d.folder, status: i === 7 ? 'PROCESSING' : i === 12 ? 'FAILED' : 'COMPLETE', ver: i % 3 === 0 ? 2 : 1, attempts: i === 12 ? 3 : 1, seen: `2024-0${(i % 9) + 1}-1${i % 9} 09:${10 + i}`, err: i === 12 ? '[PARSE] Low OCR quality on pages 4-7' : '' }))
+    .concat([
+      { file: '0016-SOCIAL-teaser-northwell_campus.pdf', fmt: 'PDF', folder: 'Deal Sourcing', status: 'PENDING', ver: 1, attempts: 0, seen: '2024-09-28 14:02', err: '' },
+      { file: '0017-ENERGY-environmental_dd-sunbridge.pdf', fmt: 'PDF', folder: 'Due Diligence', status: 'PENDING', ver: 1, attempts: 0, seen: '2024-09-28 14:05', err: '' },
+      { file: '0018-WATER-scan_permit-clearwater.png', fmt: 'PNG', folder: 'Compliance', status: 'ABANDONED', ver: 1, attempts: 5, seen: '2024-07-02 11:40', err: '[CLASSIFY] Unsupported image content' },
+    ]);
+
+  const corrections = [
+    { file: docs[7].file, field: 'deal_stage', orig: 'Sourcing', corr: 'Due Diligence', by: 'priya.shah', date: '2024-09-27' },
+    { file: docs[10].file, field: 'document_type', orig: 'Term Sheet', corr: 'Credit Agreement', by: 'mark.ellis', date: '2024-09-26' },
+    { file: docs[14].file, field: 'target_company', orig: 'Gateway Logistics', corr: 'Gateway Logistics Holdings', by: 'jordan.davis', date: '2024-09-25' },
+  ];
+  const feedback = [
+    { up: true, file: docs[0].file, q: 'key risks in Hyperscale deal', user: 'priya.shah', date: '2024-09-27' },
+    { up: false, file: docs[7].file, q: 'SunBridge merchant exposure', user: 'mark.ellis', date: '2024-09-26' },
+    { up: true, file: docs[3].file, q: 'Fund IV TVPI', user: 'lena.ortiz', date: '2024-09-24' },
+  ];
+
+  const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+  const credits = [4.1, 5.3, 3.8, 6.2, 7.9, 9.4, 8.1, 10.6, 12.2, 11.4, 13.8, 12.3];
+
+  const audit = [
+    ['2024-09-28 14:22:10', 'priya.shah', 'DOWNLOAD', docs[0].file],
+    ['2024-09-28 13:57:44', 'jordan.davis', 'OVERRIDE', docs[14].file],
+    ['2024-09-28 11:03:02', 'mark.ellis', 'FEEDBACK', docs[7].file],
+    ['2024-09-27 17:41:19', 'lena.ortiz', 'DOWNLOAD', docs[3].file],
+    ['2024-09-27 16:12:55', 'jordan.davis', 'ARCHIVE', '0003-old-teaser-draft.pdf'],
+    ['2024-09-27 10:30:08', 'priya.shah', 'DOWNLOAD', docs[2].file],
+    ['2024-09-26 15:09:33', 'mark.ellis', 'OVERRIDE', docs[10].file],
+    ['2024-09-26 09:48:21', 'lena.ortiz', 'DOWNLOAD', docs[11].file],
+    ['2024-09-25 18:02:40', 'jordan.davis', 'PURGE', '0099-duplicate-scan.tiff'],
+    ['2024-09-25 12:15:17', 'priya.shah', 'FEEDBACK', docs[0].file],
+  ];
+
+  const roles = [
+    { name: 'Deal Team', desc: 'Sourcing, DD and transaction documents', members: 6, pages: 8, sectors: 'All', types: 'All', dl: true },
+    { name: 'Investor Relations', desc: 'LP-facing fund documents only', members: 3, pages: 5, sectors: '1', types: '7', dl: true },
+    { name: 'Compliance', desc: 'Compliance and ESG documents, read-only', members: 2, pages: 4, sectors: 'All', types: '6', dl: false },
+  ];
+  const users = [
+    { user: 'JORDAN.DAVIS', roles: ['Deal Team'], active: true },
+    { user: 'PRIYA.SHAH', roles: ['Deal Team'], active: true },
+    { user: 'MARK.ELLIS', roles: ['Deal Team', 'Compliance'], active: true },
+    { user: 'LENA.ORTIZ', roles: ['Investor Relations'], active: true },
+    { user: 'SAM.CHO', roles: ['Compliance'], active: false },
+  ];
+
+  const schema = {
+    Common: { 'Core Deal Fields': { rule: { applies: 'all documents' }, attrs: [
+      ['target_company', 'Target company or asset being acquired', 'VARCHAR'], ['deal_name', 'Project code name (e.g. Project X)', 'VARCHAR'],
+      ['sponsor_name', 'Lead sponsor or GP firm name', 'VARCHAR'], ['sector', 'Infrastructure sector', 'VARCHAR'],
+      ['deal_stage', 'Current deal stage', 'VARCHAR'], ['doc_summary', '2-3 sentence document summary', 'VARCHAR']] } },
+    Category: {
+      'Deal Sourcing': { rule: { category: 'Deal Sourcing' }, attrs: [['enterprise_value', 'Total enterprise value', 'VARCHAR'], ['equity_check', 'Equity commitment', 'VARCHAR'], ['target_irr', 'Target gross IRR', 'VARCHAR'], ['target_moic', 'Target MOIC', 'VARCHAR']] },
+      'Due Diligence': { rule: { category: 'Due Diligence' }, attrs: [['advisor_name', 'DD advisor firm', 'VARCHAR'], ['key_risks', 'Key risks identified', 'VARCHAR'], ['recommendation', 'Advisor recommendation', 'VARCHAR']] },
+      'Investor Relations': { rule: { category: 'Investor Relations' }, attrs: [['fund_name', 'Fund vehicle name', 'VARCHAR'], ['tvpi', 'TVPI multiple', 'NUMBER'], ['net_irr', 'Net IRR since inception', 'VARCHAR'], ['report_date', 'Reporting period end', 'DATE']] },
+    },
+    'Sector-Specific': {
+      'Digital Infrastructure': { rule: { sector: 'DINFRA' }, attrs: [['mw_capacity', 'Critical IT load in MW', 'NUMBER'], ['pue', 'Power usage effectiveness', 'NUMBER'], ['anchor_tenants', 'Hyperscale anchor tenants', 'VARCHAR']] },
+      'Energy Transition': { rule: { sector: 'ENERGY' }, attrs: [['operating_gw', 'Operating capacity (GW)', 'NUMBER'], ['pipeline_gw', 'Development pipeline (GW)', 'NUMBER'], ['ppa_coverage', 'Contracted PPA coverage %', 'NUMBER']] },
+    },
+  };
+
+  const config = {
+    'Pipeline Settings': [['pipeline_enabled', 'Master switch for scheduled pipeline tasks', 'Enabled'], ['batch_size', 'Documents processed per task run', '25'], ['max_retries', 'Retries before a file is marked FAILED', '3'], ['pipeline_target_lag_minutes', 'Target freshness of the document catalog', '60']],
+    'AI Models': [['cortex_model', 'Model for classification prompts', 'claude-sonnet-4-5'], ['extraction_model', 'Model for AI_EXTRACT', 'arctic-extract'], ['agent_model', 'Model for the Doc Intelligence agent', 'claude-sonnet-4-5'], ['search_embedding_model', 'Embedding model (read-only)', 'snowflake-arctic-embed-l-v2.0']],
+    'Quality & Alerts': [['confidence_threshold', 'Below this, documents go to review', '0.75'], ['alert_email', 'Recipient for pipeline alerts', 'dealintel-ops@example.com'], ['cost_alert_multiplier', 'Alert when daily credits exceed N× average', '2.0'], ['error_rate_threshold_pct', 'Alert when error rate exceeds', '5']],
+  };
+
+  const notifications = [
+    { ch: 'webhook', ep: 'https://hooks.example.com/dealintel', events: ['ALERT', 'FAILED', 'PURGE'], on: true },
+    { ch: 'email', ep: 'dealintel-ops@example.com', events: ['ALERT', 'OVERRIDE'], on: true },
+    { ch: 'email', ep: 'compliance@example.com', events: ['DOWNLOAD', 'ARCHIVE'], on: false },
+  ];
+
+  return { docs, sectors, labels, savedSearches, bookmarks, tasks, registry, corrections, feedback, months, credits, audit, roles, users, schema, config, notifications };
+})();
+
+</script>
+  <script>
+/* DealIntel demo — router, shared UI helpers, SVG charts */
+window.DI = (function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pages = {};
+  const state = { route: 'overview', param: null };
+
+  const NAV = [
+    ['overview', '🏠', 'Overview'], ['documents', '📂', 'Document Browser'], ['search', '🔍', 'Document Search'],
+    ['review', '✅', 'Review Queue', 'reviewCount'], ['chat', '🤖', 'Doc Intelligence'], ['saved', '🔖', 'Saved Items'], ['help', '❓', 'Help'],
+    ['§', 'Admin'],
+    ['admin-pipeline', '📈', 'Pipeline Management'], ['admin-registry', '📋', 'Ingestion Registry'], ['admin-quality', '☑️', 'Quality & Feedback'], ['admin-cost', '💲', 'Cost Dashboard'],
+    ['#', 'AI Config'],
+    ['admin-schema', '⌨️', 'Extraction Schema'], ['admin-labels', '🏷️', 'Classification Labels'], ['admin-sectors', '💼', 'Investment Sectors'],
+    ['#', 'Management'],
+    ['admin-notifications', '🔔', 'Notifications'], ['admin-config', '⚙️', 'Configuration'], ['admin-audit', '🛡️', 'Audit Log'], ['admin-users', '👥', 'User Management'],
+  ];
+
+  function renderNav() {
+    const reviewCount = DATA.docs.filter(d => d.review && !d.reviewed).length;
+    $('#nav').innerHTML = NAV.map(n => {
+      if (n[0] === '§') return `<div class="nav-section">🛡 ${n[1]}</div>`;
+      if (n[0] === '#') return `<div class="nav-group">${n[1]}</div>`;
+      const cnt = n[3] && reviewCount ? `<span class="nav-count">${reviewCount}</span>` : '';
+      return `<a href="#${n[0]}" class="nav-link${state.route === n[0] ? ' active' : ''}" data-route="${n[0]}"><span class="ico">${n[1]}</span>${n[2]}${cnt}</a>`;
+    }).join('');
+  }
+
+  function go(route, param) { location.hash = param != null ? `${route}/${param}` : route; }
+
+  function onHash() {
+    const [route, param] = (location.hash.slice(1) || 'overview').split('/');
+    state.route = pages[route] ? route : 'overview';
+    state.param = param ? decodeURIComponent(param) : null;
+    const nav = NAV.find(n => n[0] === state.route);
+    $('#hdr-title').textContent = nav ? nav[2] : (state.route === 'detail' ? 'Document Detail' : 'Portfolio Analytics');
+    renderNav();
+    // Fresh container per navigation so root-level listeners from the previous page are dropped
+    const old = $('#content'), content = old.cloneNode(false);
+    old.replaceWith(content);
+    content.innerHTML = pages[state.route].render(state.param);
+    pages[state.route].mount?.(content, state.param);
+    $('#sidebar').classList.remove('open');
+  }
+
+  // ---------- badges ----------
+  const SECTOR_COLORS = {
+    'Digital Infrastructure': ['#e0e7ff', '#4338ca'], 'Transportation & Logistics': ['#f3e8ff', '#7e22ce'], 'Energy Transition': ['#e0f2fe', '#0369a1'],
+    'Water & Environmental': ['#dcfce7', '#15803d'], 'Social Infrastructure': ['#fef3c7', '#b45309'], 'Communications': ['#ffedd5', '#c2410c'],
+    'Conventional Power': ['#e2e8f0', '#334155'], 'Multi-Sector Platform': ['#ffe4e6', '#be123c'],
+  };
+  const STATUS_COLORS = {
+    active: ['#e0f2fe', '#0369a1'], draft: ['#f1f5f9', '#475569'], final: ['#d1fae5', '#047857'], approved: ['#d1fae5', '#047857'], complete: ['#d1fae5', '#047857'],
+    'pending ic': ['#fef3c7', '#b45309'], pending: ['#fef3c7', '#b45309'], closed: ['#e2e8f0', '#475569'], exited: ['#f3e8ff', '#7e22ce'],
+    failed: ['#fee2e2', '#b91c1c'], processing: ['#dbeafe', '#1d4ed8'], abandoned: ['#e2e8f0', '#64748b'],
+  };
+  const badge = (text, [bg, fg] = ['#f1f5f9', '#475569']) => `<span class="badge" style="background:${bg};color:${fg}">${esc(text)}</span>`;
+  const sectorBadge = s => badge(s, SECTOR_COLORS[s]);
+  const statusBadge = s => badge(s, STATUS_COLORS[String(s).toLowerCase()]);
+  const fmtTag = f => `<span class="fmt fmt-${esc(f)}">${esc(f)}</span>`;
+  const confColor = c => c >= 0.75 ? '#16a34a' : c >= 0.5 ? '#d97706' : '#dc2626';
+  const confText = c => `<b style="color:${confColor(c)}">${Math.round(c * 100)}%</b>`;
+  const confBar = c => `<span class="conf" style="background:${confColor(c)}1a;color:${confColor(c)}"><span class="bar"><i style="width:${c * 100}%;background:${confColor(c)}"></i></span>${Math.round(c * 100)}%</span>`;
+  const docLink = d => `<a class="link mono" href="#detail/${d.id}">${esc(d.file)}</a>`;
+
+  // ---------- layout helpers ----------
+  const header = (ico, title, sub, actions = '') => `<div class="page-header"><div><h1><span class="ico">${ico}</span>${esc(title)}</h1>${sub ? `<p>${sub}</p>` : ''}</div><div class="row">${actions}</div></div>`;
+  const stat = (lbl, val, s = '', color = '') => `<div class="card p4 stat"><div class="lbl">${lbl}</div><div class="val" style="${color ? `color:${color}` : ''}">${val}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+  const tabs = (group, items, active = 0, cls = 'tabs') => `<div class="${cls}" data-tabs="${group}">${items.map((t, i) => `<button class="tab${i === active ? ' active' : ''}" data-tab="${group}-${i}">${t}</button>`).join('')}</div>`;
+  const panel = (group, i, html, active = 0) => `<div class="tab-panel${i === active ? ' active' : ''}" data-panel="${group}-${i}">${html}</div>`;
+  const empty = (ico, msg, sub = '') => `<div class="card empty"><div style="font-size:32px">${ico}</div><div style="font-weight:600;margin-top:8px;color:var(--text-2)">${msg}</div><div class="sub">${sub}</div></div>`;
+
+  // ---------- charts (inline SVG) ----------
+  const PALETTE = ['#29B5E8', '#11567F', '#C5A55A', '#7C3AED', '#22C55E', '#F59E0B', '#EF4444', '#0EA5E9'];
+  function hbar(data, color = '#29B5E8') {
+    const max = Math.max(...data.map(d => d[1])), rowH = 26, labelW = 130, w = 460, h = data.length * rowH;
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMinYMin meet">${data.map((d, i) => {
+      const bw = (w - labelW - 40) * d[1] / max, y = i * rowH;
+      return `<text x="${labelW - 8}" y="${y + 16}" text-anchor="end">${esc(d[0])}</text><rect x="${labelW}" y="${y + 5}" width="${bw}" height="16" rx="3" fill="${Array.isArray(color) ? color[i % color.length] : color}"/><text x="${labelW + bw + 6}" y="${y + 17}">${d[1]}</text>`;
+    }).join('')}</svg>`;
+  }
+  function vbar(data, colors = PALETTE, h = 200) {
+    const max = Math.max(...data.map(d => d[1])), w = 460, bottom = 36, gap = w / data.length, bw = Math.min(44, gap * 0.6);
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">${data.map((d, i) => {
+      const bh = (h - bottom - 18) * d[1] / max, x = i * gap + (gap - bw) / 2, y = h - bottom - bh;
+      const lbl = d[0].length > 12 ? d[0].slice(0, 11) + '…' : d[0];
+      return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="3" fill="${colors[i % colors.length]}"><title>${esc(d[0])}: ${d[1]}</title></rect><text x="${x + bw / 2}" y="${y - 4}" text-anchor="middle">${d[1]}</text><text x="${x + bw / 2}" y="${h - bottom + 16}" text-anchor="middle">${esc(lbl)}</text>`;
+    }).join('')}<line x1="0" x2="${w}" y1="${h - bottom}" y2="${h - bottom}" stroke="var(--border)"/></svg>`;
+  }
+  function donut(data, colors = PALETTE) {
+    const total = data.reduce((s, d) => s + d[1], 0), r = 80, c = 2 * Math.PI * r;
+    let off = 0;
+    const arcs = data.map((d, i) => {
+      const len = c * d[1] / total, seg = `<circle r="${r}" cx="100" cy="100" fill="none" stroke="${colors[i % colors.length]}" stroke-width="32" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"><title>${esc(d[0])}: ${d[1]}</title></circle>`;
+      off += len; return seg;
+    }).join('');
+    return `<div class="row" style="gap:20px;flex-wrap:nowrap"><svg viewBox="0 0 200 200" width="180" height="180">${arcs}<text x="100" y="96" text-anchor="middle" style="font-size:24px;font-weight:700;fill:var(--text)">${total}</text><text x="100" y="116" text-anchor="middle">documents</text></svg>
+      <div class="legend" style="flex-direction:column">${data.map((d, i) => `<span><i style="background:${colors[i % colors.length]}"></i>${esc(d[0])} (${d[1]})</span>`).join('')}</div></div>`;
+  }
+  function line(labels, values, color = '#29B5E8', h = 180) {
+    const w = 700, pad = 30, max = Math.max(...values) * 1.1, step = (w - pad * 2) / (values.length - 1);
+    const pts = values.map((v, i) => [pad + i * step, h - pad - (h - pad * 2) * v / max]);
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
+      <polygon points="${pad},${h - pad} ${pts.map(p => p.join(',')).join(' ')} ${w - pad},${h - pad}" fill="${color}" opacity=".12"/>
+      <polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="${color}" stroke-width="2.5"/>
+      ${pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${color}"><title>${labels[i]}: ${values[i]}</title></circle><text x="${p[0]}" y="${h - 10}" text-anchor="middle">${labels[i]}</text>`).join('')}
+      <line x1="${pad}" x2="${w - pad}" y1="${h - pad}" y2="${h - pad}" stroke="var(--border)"/></svg>`;
+  }
+  const countBy = (arr, key) => Object.entries(arr.reduce((m, x) => (m[x[key]] = (m[x[key]] || 0) + 1, m), {})).sort((a, b) => b[1] - a[1]);
+
+  // ---------- modal / toast ----------
+  function openDoc(d) {
+    $('#modal-title').textContent = d.file;
+    $('#modal-body').innerHTML = `<div class="pdf">${pdfPage(d)}</div>`;
+    $('#modal').classList.add('open');
+  }
+  function pdfPage(d, hl = []) {
+    let body = esc(d.summary) + '<br><br>' + esc(`Key risks: ${d.risks}. Action required: ${d.action}.`);
+    hl.filter(Boolean).forEach(t => { body = body.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>'); });
+    return `<div class="pdf-page"><div style="font-size:9px;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em">Confidential · ${esc(d.folder)}</div>
+      <h3 style="margin-top:14px">${esc(d.type.toUpperCase())}</h3><div style="color:#6b7280;margin-bottom:16px">${esc(d.deal !== '—' ? d.deal : d.fund)} · ${esc(d.company !== '—' ? d.company : 'Fund-level')}</div>
+      <p>${body}</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:16px;font-family:Inter,sans-serif;font-size:10px">${[['Enterprise Value', d.ev], ['Equity', d.equity], ['Target IRR', d.irr], ['Target MOIC', d.moic], ['Co-Investors', d.coinv], ['Fund', d.fund]].map(r => `<tr><td style="border-bottom:1px solid #e5e7eb;padding:4px 0;color:#6b7280">${r[0]}</td><td style="border-bottom:1px solid #e5e7eb;padding:4px 0;text-align:right;font-weight:600">${esc(r[1])}</td></tr>`).join('')}</table>
+      <div style="margin-top:40px;color:#9ca3af;font-size:9px;text-align:center">Page 1 of ${d.pages}</div></div>`;
+  }
+  function toast(msg, type = 'success') {
+    const t = document.createElement('div'); t.className = `toast ${type}`; t.textContent = (type === 'success' ? '✓ ' : 'ℹ ') + msg;
+    $('#toasts').appendChild(t); setTimeout(() => t.remove(), 3500);
+  }
+
+  // ---------- theme ----------
+  function setTheme(mode) {
+    const dark = mode === 'dark' || (mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', dark);
+    $$('#theme-seg button').forEach(b => b.classList.toggle('on', b.dataset.theme === mode));
+  }
+
+  // ---------- global delegated events ----------
+  function bindGlobal() {
+    document.addEventListener('click', e => {
+      const tab = e.target.closest('[data-tab]');
+      if (tab) {
+        const bar = tab.parentElement, group = bar.dataset.tabs, key = tab.dataset.tab;
+        $$('.tab', bar).forEach(t => t.classList.toggle('active', t === tab));
+        $$(`[data-panel^="${group}-"]`).forEach(p => p.classList.toggle('active', p.dataset.panel === key));
+      }
+      const sw = e.target.closest('.switch');
+      if (sw) { sw.classList.toggle('on'); toast(sw.classList.contains('on') ? 'Enabled' : 'Disabled', 'info'); }
+      const t = e.target.closest('[data-toast]');
+      if (t) toast(t.dataset.toast);
+      const nav = e.target.closest('[data-go]');
+      if (nav) { e.preventDefault(); go(nav.dataset.go); }
+      const pv = e.target.closest('[data-preview]');
+      if (pv) { e.preventDefault(); openDoc(DATA.docs.find(d => d.id == pv.dataset.preview)); }
+      if (!e.target.closest('#user-btn') && !e.target.closest('#user-dd')) $('#user-dd').classList.remove('open');
+    });
+    $('#user-btn').addEventListener('click', () => $('#user-dd').classList.toggle('open'));
+    $('#theme-seg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setTheme(b.dataset.theme); });
+    $('#signout').addEventListener('click', e => { e.preventDefault(); toast('Sign-out is disabled in the demo', 'info'); });
+    $('#modal-close').addEventListener('click', () => $('#modal').classList.remove('open'));
+    $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') $('#modal').classList.remove('open'); });
+    $('#modal-dl').addEventListener('click', () => toast('Download is simulated in the demo', 'info'));
+    $('#menu-toggle').addEventListener('click', () => $('#sidebar').classList.toggle('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#modal').classList.remove('open'); });
+    window.addEventListener('hashchange', onHash);
+  }
+
+  function start() { bindGlobal(); onHash(); }
+
+  return { $, $$, esc, pages, state, go, renderNav, badge, sectorBadge, statusBadge, fmtTag, confText, confBar, confColor, docLink, header, stat, tabs, panel, empty, hbar, vbar, donut, line, countBy, PALETTE, openDoc, pdfPage, toast, start };
+})();
+
+</script>
+  <script>
+/* DealIntel demo — user-facing screens */
+(function () {
+  const { $, $$, esc, pages, header, stat, tabs, panel, empty, sectorBadge, statusBadge, fmtTag, confText, confBar, docLink, hbar, vbar, donut, countBy, PALETTE, toast, openDoc, pdfPage } = DI;
+  const D = DATA.docs;
+  const byId = id => D.find(d => d.id == id);
+  const opts = (arr, all) => `<option value="">${all}</option>` + arr.map(v => `<option>${esc(v)}</option>`).join('');
+  const uniq = k => [...new Set(D.map(d => d[k]))].filter(v => v !== '—').sort();
+
+  // ---------- canned agent answers ----------
+  const ANSWERS = [
+    { match: /risk/i, tool: 'Document Search', html: `The key risks across our <b>Digital Infrastructure</b> investments cluster into three themes:<ol><li><b>Power availability</b> — Hyperscale's 2026 expansion depends on a 300MW utility interconnect <span class="cite" data-preview="1">[0001-DINFRA-ic_presentation-hyperscale-2024.pdf, p.14]</span></li><li><b>Customer concentration</b> — top 3 hyperscalers are 71% of contracted revenue <span class="cite" data-preview="1">[p.22]</span></li><li><b>Leverage covenants</b> — Meridian's TLB steps down to 6.5x in 2026 <span class="cite" data-preview="11">[0011-DINFRA-credit_agreement-meridian-2024.pdf, p.87]</span></li></ol>The ESG report also flags water-usage effectiveness above peer median <span class="cite" data-preview="13">[0013-DINFRA-esg_report-hyperscale-2024.tiff, p.6]</span>.` },
+    { match: /sector|stage|how many|count/i, tool: 'Cortex Analyst', chart: true, html: `Here is the breakdown of deal documents by sector and deal stage:<table><tr><th>Sector</th><th>Due Diligence</th><th>IC Review</th><th>Closing</th><th>Portfolio</th></tr><tr><td>Digital Infrastructure</td><td>0</td><td>2</td><td>0</td><td>2</td></tr><tr><td>Energy Transition</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Transportation &amp; Logistics</td><td>0</td><td>0</td><td>2</td><td>1</td></tr><tr><td>Water &amp; Environmental</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></table><b>Energy Transition</b> has the most active diligence, driven by Project Solaris and Project SunBridge.` },
+    { match: /irr|moic|fund|tvpi|performance/i, tool: 'Cortex Analyst', html: `<b>Infrastructure Fund IV</b> (2020 vintage, $14.0B) as of Q1 2024:<ul><li>80% deployed ($11.2B)</li><li><b>1.45x TVPI</b> / <b>16.2% net IRR</b> / 0.3x DPI</li><li>Top performer: Meridian Fiber at 1.8x gross MOIC</li></ul>Source: <span class="cite" data-preview="4">[0004-MULTI-lp_report-fund_iv_q1-2024.pdf, p.3]</span>` },
+    { match: /./, tool: 'Document Search', html: `I found 3 relevant documents. The most relevant is the <b>Project Solaris Technical DD</b>, which concludes that operating assets perform within 2% of P50 projections and recommends proceeding subject to interconnection reps <span class="cite" data-preview="3">[0003-ENERGY-dd_report-solaris-2024.pdf, p.4]</span>. The financial model v7 shows a 15.8% base-case levered IRR <span class="cite" data-preview="14">[0014-ENERGY-financial_model-solaris-v7.xlsx.pdf, p.2]</span>.` },
+  ];
+  const answer = q => ANSWERS.find(a => a.match.test(q));
+  const QUICK = ['What are the key risks in our Digital Infrastructure investments?', 'How many deals by sector are in due diligence this year?', 'What is Fund IV performance to date?', 'Summarize the Solaris diligence findings'];
+
+  function charts() {
+    const statusColors = { 'pending IC': '#F59E0B', draft: '#94A3B8', final: '#22C55E', active: '#29B5E8', approved: '#10B981', closed: '#64748B' };
+    const byStatus = countBy(D, 'status');
+    return `<div class="grid g2">
+      <div class="card p5 chart"><div class="chart-title">Documents by Type</div>${hbar(countBy(D, 'type').slice(0, 10))}</div>
+      <div class="card p5 chart"><div class="chart-title">Sector Mix</div>${donut(countBy(D, 'sector'))}</div>
+      <div class="card p5 chart"><div class="chart-title">Documents by Sector</div>${vbar(countBy(D, 'sector'))}</div>
+      <div class="card p5 chart"><div class="chart-title">Document Status</div>${vbar(byStatus, byStatus.map(s => statusColors[s[0]] || '#29B5E8'))}</div></div>`;
+  }
+
+  // ---------- Overview ----------
+  pages.overview = {
+    render: () => `<div class="page-wrap w-6xl">
+      <div class="hero"><h2>Document Intelligence</h2><p>Infrastructure Investments · Powered by Snowflake Cortex AI</p>
+        <div class="row"><a class="btn btn-primary" href="#documents">📂 Browse</a><a class="btn btn-ghost" href="#search">🔍 Search</a><a class="btn btn-ghost" href="#chat">🤖 Doc Intelligence</a><a class="btn btn-ghost" href="#saved">🔖 Saved Items</a><a class="btn btn-ghost" href="#review">✅ Review Queue</a></div></div>
+      <div class="grid g4 mt2">${stat('Documents Indexed', D.length, 'across 6 source folders')}${stat('Active Deals', 9, '4 sectors')}${stat('Needs Review', D.filter(d => d.review).length, 'confidence < 75%', '#d97706')}${stat('Avg Confidence', Math.round(D.reduce((s, d) => s + d.conf, 0) / D.length * 100) + '%', 'last 30 days', '#16a34a')}</div>
+      <div class="row between mt2"><h3 class="section-title">📊 Portfolio Analytics</h3><button class="btn btn-secondary btn-sm" data-toast="Analytics refreshed">↻ Refresh</button></div>
+      <div class="card p5 mb"><div class="row"><b>🤖 Ask a Question</b><span class="sub">Powered by the Doc Intelligence Agent</span></div>
+        <div class="row mt"><input id="ov-q" style="flex:1" placeholder="e.g. How many deals do we have by sector and deal stage?"><button class="btn btn-primary" id="ov-ask">➤ Ask</button></div><div id="ov-ans"></div></div>
+      ${charts()}
+      <div class="grid g2 mt2">
+        <div class="card p5"><h3 class="section-title">💬 Quick Questions</h3>${QUICK.map(q => `<a class="card p4" style="display:block;margin-bottom:8px;font-size:13px" href="#chat/${encodeURIComponent(q)}">💬 ${esc(q)}</a>`).join('')}</div>
+        <div class="card p5"><h3 class="section-title">🕐 Recently Indexed</h3>${D.slice(0, 8).map(d => `<a class="list-row" href="#detail/${d.id}" style="padding:8px 0"><span class="chip">${esc(d.folder)}</span><span style="flex:1;font-size:13px">${esc(d.type)} — <span class="sub">${esc(d.company !== '—' ? d.company : d.fund)}</span></span>${fmtTag(d.fmt)}</a>`).join('')}</div>
+      </div></div>`,
+    mount: root => {
+      const ask = () => {
+        const q = $('#ov-q').value.trim() || 'How many deals do we have by sector and deal stage?';
+        $('#ov-ans').innerHTML = `<div class="mt dots"><span></span><span></span><span></span></div>`;
+        setTimeout(() => { const a = answer(q); $('#ov-ans').innerHTML = `<div class="mt"><span class="via">⚡ via ${a.tool}</span><div class="bubble" style="max-width:100%;border:1px solid var(--border);border-radius:12px">${a.html}</div></div>`; }, 900);
+      };
+      $('#ov-ask').addEventListener('click', ask);
+      $('#ov-q').addEventListener('keydown', e => e.key === 'Enter' && ask());
+    },
+  };
+
+  pages.analytics = { render: () => `<div class="page-wrap w-6xl">${header('📊', 'Portfolio Analytics', 'Cortex Analyst natural-language analytics')}${charts()}</div>` };
+
+  // ---------- Document Browser ----------
+  function docPanel(d) {
+    return `<div class="card p4"><div class="row between"><b style="font-size:15px">${esc(d.type)}</b><button class="btn btn-secondary btn-sm" id="dp-close">✕</button></div>
+      ${d.review ? `<div class="note note-amber mt">⚠️ Low confidence — human review recommended</div>` : ''}${d.pii ? `<div class="note note-red mt">🛡️ PII detected</div>` : ''}
+      <dl class="kv mt">${[['Target Company', d.company], ['Sponsor', d.sponsor], ['Sector', sectorBadge(d.sector)], ['Deal Stage', d.stage], ['Deal Code', `<span class="mono">${d.code}</span>`], ['Fund', d.fund], ['Investment Date', d.invDate], ['Exit Date', d.exitDate], ['Status', statusBadge(d.status)], ['Pages', d.pages], ['Format', fmtTag(d.fmt)], ['Confidence', confText(d.conf)]].map(r => `<dt>${r[0]}</dt><dd>${typeof r[1] === 'string' && r[1].startsWith('<') ? r[1] : esc(r[1])}</dd>`).join('')}</dl>
+      <div class="note mt" style="background:var(--surface-alt);border:1px solid var(--border)">${esc(d.summary)}</div>
+      <a class="btn btn-primary mt" style="width:100%;justify-content:center" href="#detail/${d.id}">View Document</a>
+      <div class="mt" style="border-top:1px solid var(--border);padding-top:12px"><div class="lbl-up">Correct an Attribute</div>
+        <select id="corr-field" style="width:100%;margin-top:6px"><option value="company">Target Company</option><option value="stage">Deal Stage</option><option value="type">Document Type</option><option value="fund">Fund</option></select>
+        <div class="sub mt" id="corr-cur">Current: ${esc(d.company)}</div><input id="corr-val" style="width:100%;margin-top:6px" placeholder="Corrected value"><button class="btn btn-secondary btn-sm mt" id="corr-submit">Submit Correction</button></div></div>`;
+  }
+  pages.documents = {
+    render: () => `<div class="page-wrap w-7xl">${header('📂', 'Document Browser', 'Filter the catalog by type, sector and status', '<button class="btn btn-secondary btn-sm" data-toast="Exported 15 rows to deal_documents.csv">⬇ Export CSV</button><button class="btn btn-secondary btn-sm" data-toast="Catalog refreshed">↻ Refresh</button>')}
+      <div class="card p4 mb row"><select id="f-type">${opts(uniq('type'), 'All Document Types')}</select><select id="f-sector">${opts(uniq('sector'), 'All Sectors')}</select>
+        <input id="f-text" style="width:256px" placeholder="Search company, deal, fund, content..."><label class="row sub"><input type="checkbox" id="f-review"> Needs Review Only</label><span class="sub" style="margin-left:auto" id="f-count"></span></div>
+      <div class="split"><div class="main card table-wrap"><table class="t"><thead><tr><th><input type="checkbox" id="sel-all"></th><th>Type</th><th>Target Company</th><th>Sector</th><th>Format</th><th>Status</th><th>Conf</th><th>Investment Date</th><th>Deal Code</th></tr></thead><tbody id="doc-rows"></tbody></table>
+        <div class="row between p4 sub"><span id="pg-info"></span><span class="row"><button class="btn btn-secondary btn-sm" disabled>Previous</button><button class="btn btn-secondary btn-sm" disabled>Next</button></span></div></div>
+        <div class="side-panel hidden" id="doc-panel"></div></div>
+      <div id="batch" class="card p4 hidden" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:40" ><div class="row"><b id="batch-n"></b><select><option>Archive Selected</option><option>Reprocess Selected</option></select><button class="btn btn-primary btn-sm" id="batch-apply">Apply</button><button class="btn btn-secondary btn-sm" id="batch-clear">Clear</button></div></div></div>`,
+    mount: () => {
+      const draw = () => {
+        const t = $('#f-type').value, s = $('#f-sector').value, q = $('#f-text').value.toLowerCase(), r = $('#f-review').checked;
+        const rows = D.filter(d => (!t || d.type === t) && (!s || d.sector === s) && (!r || d.review) && (!q || [d.company, d.deal, d.fund, d.summary, d.file].join(' ').toLowerCase().includes(q)));
+        $('#doc-rows').innerHTML = rows.map(d => `<tr class="clickable${d.review ? ' review' : ''}" data-id="${d.id}"><td><input type="checkbox" class="rowchk"></td><td><a class="gold" style="font-weight:600" href="#detail/${d.id}">${esc(d.type)}</a></td><td>${esc(d.company)}</td><td>${sectorBadge(d.sector)}</td><td>${fmtTag(d.fmt)}</td><td>${statusBadge(d.status)}</td><td>${confText(d.conf)}</td><td>${d.invDate}</td><td class="mono">${d.code}</td></tr>`).join('') || `<tr><td colspan="9" class="empty">No documents match these filters</td></tr>`;
+        $('#f-count').textContent = `${rows.length} documents`; $('#pg-info').textContent = `Showing 1–${rows.length} of ${rows.length} documents`;
+      };
+      ['#f-type', '#f-sector', '#f-review'].forEach(s => $(s).addEventListener('change', draw)); $('#f-text').addEventListener('input', draw); draw();
+      const batch = () => { const n = $$('.rowchk:checked').length; $('#batch').classList.toggle('hidden', !n); $('#batch-n').textContent = `${n} selected`; };
+      $('#sel-all').addEventListener('change', e => { $$('.rowchk').forEach(c => c.checked = e.target.checked); batch(); });
+      $('#batch-clear').addEventListener('click', () => { $$('.rowchk, #sel-all').forEach(c => c.checked = false); batch(); });
+      $('#batch-apply').addEventListener('click', () => { toast(`Action applied to ${$$('.rowchk:checked').length} documents`); $('#batch-clear').click(); });
+      $('#doc-rows').addEventListener('click', e => {
+        if (e.target.classList.contains('rowchk')) return batch();
+        if (e.target.closest('a')) return;
+        const tr = e.target.closest('tr[data-id]'); if (!tr) return;
+        $$('#doc-rows tr').forEach(r => r.classList.toggle('sel', r === tr));
+        const d = byId(tr.dataset.id), p = $('#doc-panel'); p.innerHTML = docPanel(d); p.classList.remove('hidden');
+        $('#dp-close').addEventListener('click', () => { p.classList.add('hidden'); tr.classList.remove('sel'); });
+        $('#corr-field').addEventListener('change', e2 => $('#corr-cur').textContent = `Current: ${d[e2.target.value]}`);
+        $('#corr-submit').addEventListener('click', () => { toast('Correction submitted for admin approval'); $('#corr-val').value = ''; });
+      });
+    },
+  };
+
+  // ---------- Document Detail ----------
+  pages.detail = {
+    render: id => {
+      const d = byId(id) || D[0];
+      const related = D.filter(x => x.id !== d.id && (x.deal === d.deal || x.company === d.company) && x.deal !== '—');
+      const attr = (l, v, edit = true) => `<div style="padding:6px 0;border-bottom:1px solid var(--border)"><div class="lbl-up">${l}</div><div class="row between" style="font-size:13px"><span>${v}</span>${edit ? '<button class="btn-sm" style="border:0;background:none;color:var(--muted)" data-toast="Correction saved as pending">✏️</button>' : ''}</div></div>`;
+      const raw = `${d.type.toUpperCase()}\n\n${d.deal} — <mark class="m-party">${d.company}</mark>\nDeal Code: <mark class="m-id">${d.code}</mark>\nFund: <mark class="m-party">${d.fund}</mark>\nSector: <mark class="m-cls">${d.sector}</mark>\nInvestment Date: <mark class="m-date">${d.invDate}</mark>\n\nTRANSACTION SUMMARY\nEnterprise Value: <mark class="m-money">${d.ev}</mark>\nEquity Check: <mark class="m-money">${d.equity}</mark>\nTarget IRR: ${d.irr}   Target MOIC: ${d.moic}\nCo-Investors: ${d.coinv}\n\nEXECUTIVE SUMMARY\n${d.summary}\n\nKEY RISKS\n${d.risks}\n\nACTION REQUIRED\n${d.action}`;
+      return `<div class="page-wrap w-6xl"><a class="link" href="#documents">← Back</a>
+        <div class="row between mt"><div><div style="font-size:18px;font-weight:700" class="mono">${esc(d.file)}</div>
+          <div class="row mt"><span class="badge" style="background:#dbeafe;color:#1d4ed8">${esc(d.type)}</span>${sectorBadge(d.sector)}${confBar(d.conf)}<span class="badge" style="background:#d1fae5;color:#047857">COMPLETE</span></div></div>
+          <div class="row"><button class="btn btn-secondary btn-sm" id="bm">🔖 Save</button><button class="btn btn-secondary btn-sm" data-preview="${d.id}">👁 Preview</button><button class="btn btn-secondary btn-sm" style="color:#b45309" data-toast="Document archived">Archive</button><button class="btn btn-secondary btn-sm" style="color:#dc2626" data-toast="Purge requires confirmation in production">Purge</button></div></div>
+        <div class="mt2">${tabs('dt', ['📄 Document', '🕐 History', `👥 Related <span class="cnt">${related.length}</span>`, '≡ Raw Text'])}
+        ${panel('dt', 0, `<div class="split"><div class="main"><div class="row mb"><input id="doc-q" style="flex:1" placeholder="Search within this document..."><span class="sub" id="doc-qn"></span></div>
+            <div class="card"><div class="row between p4" style="background:var(--surface-alt);border-bottom:1px solid var(--border);padding:8px 12px"><span class="row sub"><button class="btn btn-secondary btn-sm">‹</button>Page 1 of ${d.pages}<button class="btn btn-secondary btn-sm">›</button></span><span class="sub" id="doc-hl" style="color:#b45309"></span></div><div class="pdf" id="doc-pdf">${pdfPage(d)}</div></div></div>
+          <div class="side-panel card p4"><b>Attributes</b>${attr('Target Company', esc(d.company))}${attr('Sponsor', esc(d.sponsor))}${attr('Document Type', esc(d.type))}${attr('Deal Code', `<span class="mono">${d.code}</span>`)}${attr('Fund Name', esc(d.fund))}${attr('Sector', sectorBadge(d.sector))}${attr('Deal Stage', esc(d.stage) + (d.review ? ' <span class="chip" style="background:#fef3c7;color:#b45309">Pending</span>' : ''))}${attr('Status', statusBadge(d.status))}${attr('Investment Date', d.invDate)}${attr('Exit Date', d.exitDate)}${attr('Enterprise Value', d.ev, false)}${attr('Target IRR / MOIC', `${d.irr} / ${d.moic}`, false)}${attr('Key Risks', esc(d.risks), false)}${attr('Action Required', esc(d.action), false)}</div></div>`)}
+        ${panel('dt', 1, `<div class="card p5"><div class="tl">${[['#22c55e', '✓', 2, 'COMPLETE', '2024-09-20 10:14', ''], ['#ef4444', '!', 1, 'FAILED', '2024-09-19 22:03', '[EXTRACT] Model timeout after 120s'], ['#f59e0b', '↻', 1, 'RETRY', '2024-09-19 21:45', '']].map(v => `<div class="tl-item"><div class="tl-dot" style="background:${v[0]}">${v[1]}</div><div class="row"><b>Version ${v[2]}</b>${statusBadge(v[3].toLowerCase() === 'retry' ? 'pending' : v[3])}<span class="sub">1 attempt · Completed ${v[4]}</span></div>${v[5] ? `<div class="note note-red mt">${v[5]}</div>` : ''}</div>`).join('')}</div></div>`)}
+        ${panel('dt', 2, related.length ? `<div class="card table-wrap"><table class="t"><thead><tr><th>Document</th><th>Type</th><th>Target Company</th><th>Sector</th><th>Status</th></tr></thead><tbody>${related.map(r => `<tr><td>${docLink(r)}</td><td>${esc(r.type)}</td><td>${esc(r.company)}</td><td>${sectorBadge(r.sector)}</td><td>${statusBadge(r.status)}</td></tr>`).join('')}</tbody></table></div>` : empty('👥', 'No related documents'))}
+        ${panel('dt', 3, `<div class="row between mb"><span class="sub">${d.pages} pages · Extracted text content</span><label class="row sub"><input type="checkbox" id="hl-toggle" checked> Highlight values</label></div>
+          <div class="row mb" style="font-size:11px"><mark class="m-id">Identifiers</mark><mark class="m-party">Parties</mark><mark class="m-date">Dates</mark><mark class="m-money">Monetary</mark><mark class="m-cls">Classification</mark></div><pre class="raw" id="raw">${raw}</pre>`)}</div></div>`;
+    },
+    mount: (root, id) => {
+      const d = byId(id) || D[0];
+      $('#doc-q').addEventListener('input', e => {
+        const terms = e.target.value.split(/\s+/).filter(t => t.length > 2);
+        $('#doc-pdf').innerHTML = pdfPage(d, terms);
+        const n = $$('#doc-pdf mark').length;
+        $('#doc-qn').textContent = terms.length ? `${n} matches on page 1` : '';
+        $('#doc-hl').textContent = terms.length ? `Highlighting: ${terms.join(', ')}` : '';
+      });
+      $('#bm').addEventListener('click', e => { e.currentTarget.textContent = '🔖 Saved'; toast('Bookmarked'); });
+      $('#hl-toggle').addEventListener('change', e => $$('#raw mark').forEach(m => m.style.background = e.target.checked ? '' : 'transparent'));
+    },
+  };
+
+  // ---------- Search ----------
+  const SUGGEST = ['IC Presentations', 'DD Reports', 'Term Sheets', 'LP Reports', 'Board Decks', 'Valuation Memos'];
+  pages.search = {
+    render: q => `<div class="page-wrap w-7xl">${header('🔍', 'Document Search', 'Hybrid semantic + keyword search powered by Cortex Search')}
+      <div class="card p4 mb"><div class="row"><input id="s-q" style="flex:1" placeholder="e.g. data center acquisition due diligence risks" value="${esc(q || '')}"><button class="btn btn-primary" id="s-go">Search</button><button class="btn btn-secondary" id="s-f">Filters ▾</button><button class="btn btn-secondary" data-toast="Search saved to Saved Items">💾</button></div>
+        <div class="row mt hidden" id="s-filters"><select id="s-sector">${opts(uniq('sector'), 'All Sectors')}</select><select>${opts(uniq('type'), 'All Doc Types')}</select><select>${opts(['PDF', 'DOCX', 'TIFF'], 'All Formats')}</select><select>${opts(uniq('status'), 'All Statuses')}</select><select><option>20 results</option><option>50 results</option></select></div></div>
+      <div id="s-out"></div></div>`,
+    mount: (root, q) => {
+      const run = () => {
+        const text = $('#s-q').value.trim(), sec = $('#s-sector').value;
+        if (!text) {
+          $('#s-out').innerHTML = `<div class="card p5"><div class="sub mb">Suggested searches:</div><div class="grid g3">${SUGGEST.map(s => `<button class="btn btn-secondary" data-sug="${s}">${s}</button>`).join('')}</div></div>`; return;
+        }
+        const words = text.toLowerCase().split(/\s+/);
+        const scored = D.filter(d => !sec || d.sector === sec).map(d => {
+          const hay = [d.type, d.company, d.deal, d.summary, d.risks, d.sector, d.folder].join(' ').toLowerCase();
+          return { d, s: words.reduce((n, w) => n + (hay.includes(w.replace(/s$/, '')) ? 1 : 0), 0) + d.conf * 0.1 };
+        }).filter(x => x.s >= 1).sort((a, b) => b.s - a.s);
+        const res = scored.length ? scored : D.slice(0, 5).map(d => ({ d, s: 0.5 }));
+        $('#s-out').innerHTML = `<div class="split"><div class="main card"><div class="row between p4" style="border-bottom:1px solid var(--border)"><span class="sub"><b>${res.length}</b> semantic matches · ${120 + res.length * 7}ms</span><span class="sub">Page 1 of 1</span></div>
+          <div class="table-wrap"><table class="t"><thead><tr><th>Document Type</th><th>Company</th><th>Sector</th><th>Status</th><th>Match</th><th></th></tr></thead><tbody>${res.map(({ d }) => `<tr class="clickable" data-id="${d.id}"><td><b>${esc(d.type)}</b> ${fmtTag(d.fmt)}</td><td>${esc(d.company)}</td><td>${sectorBadge(d.sector)}</td><td>${statusBadge(d.status)}</td><td class="sub">${esc(d.summary.slice(0, 60))}…</td><td style="white-space:nowrap"><button class="btn-sm" style="border:0;background:none" data-toast="Thanks for the feedback">👍</button><button class="btn-sm" style="border:0;background:none" data-toast="Thanks for the feedback">👎</button></td></tr>`).join('')}</tbody></table></div></div>
+          <div class="side-panel" id="s-panel"></div></div>`;
+        showPanel(res[0].d, words);
+        $('#s-out tbody').addEventListener('mouseover', e => { const tr = e.target.closest('tr[data-id]'); if (tr) showPanel(byId(tr.dataset.id), words); });
+        $('#s-out tbody').addEventListener('click', e => { const tr = e.target.closest('tr[data-id]'); if (tr && !e.target.closest('button')) DI.go('detail', tr.dataset.id); });
+      };
+      const showPanel = (d, words) => {
+        let snip = esc(d.summary); words.filter(w => w.length > 3).forEach(w => snip = snip.replace(new RegExp(`(${w.replace(/s$/, '')}\\w*)`, 'gi'), '<mark>$1</mark>'));
+        $('#s-panel').innerHTML = `<div class="card p4"><div class="lbl-up">Document Details</div><div style="font-size:18px;font-weight:600;margin:6px 0">${esc(d.type)}</div><div class="row">${sectorBadge(d.sector)}${statusBadge(d.status)}${fmtTag(d.fmt)}</div>
+          <div class="note note-amber mt">Matched on ${1 + d.id % 3} pages<br><i>“${snip}”</i></div>
+          <dl class="kv mt">${[['Target Company', d.company], ['Sponsor', d.sponsor], ['Deal Stage', d.stage], ['Investment Date', d.invDate], ['Enterprise Value', d.ev], ['Deal Code', d.code], ['Fund', d.fund]].map(r => `<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}<dt>Confidence</dt><dd>${confText(d.conf)}</dd></dl>
+          <div class="mt row between"><a class="link mono" href="#" data-preview="${d.id}">📄 Preview</a><a class="link" href="#detail/${d.id}">↗ Open full detail</a></div></div>`;
+      };
+      $('#s-go').addEventListener('click', run); $('#s-q').addEventListener('keydown', e => e.key === 'Enter' && run());
+      $('#s-f').addEventListener('click', () => $('#s-filters').classList.toggle('hidden'));
+      $('#s-sector').addEventListener('change', run);
+      $('#s-out').addEventListener('click', e => { const b = e.target.closest('[data-sug]'); if (b) { $('#s-q').value = b.dataset.sug; run(); } });
+      run();
+    },
+  };
+
+  // ---------- Review Queue ----------
+  pages.review = {
+    render: () => `<div class="page-wrap w-5xl">${header('🛡', 'Review Queue', 'Scope: All Sectors · All document types', '<button class="btn btn-secondary btn-sm" data-toast="Queue refreshed">↻ Refresh</button>')}
+      <div class="card p4 mb"><div class="row between"><span id="rv-sum" class="sub"></span><b id="rv-pct" style="color:#16a34a"></b></div><div style="height:8px;background:var(--surface-hover);border-radius:4px;margin-top:8px;display:flex;overflow:hidden"><i id="rv-a" style="background:#22c55e"></i><i id="rv-s" style="background:#94a3b8"></i></div></div>
+      <div class="card p4 mb row"><select>${opts(uniq('sector'), 'All Sectors')}</select><select>${opts(uniq('type'), 'All Classifications')}</select><input style="flex:1" placeholder="Search company, deal, fund..."></div>
+      <div class="tabs" id="rv-tabs"><button class="tab active" data-f="pending">Pending <span class="cnt hot" id="c-p"></span></button><button class="tab" data-f="approved">Approved <span class="cnt" id="c-a"></span></button><button class="tab" data-f="skipped">Skipped <span class="cnt" id="c-s"></span></button><button class="tab" data-f="all">All</button></div>
+      <div id="rv-list"></div></div>`,
+    mount: () => {
+      const items = D.filter(d => d.review);
+      let filter = 'pending';
+      const alts = { 'Commercial DD': ['Technical DD', 'Market Study'], 'Credit Agreement': ['Term Sheet', 'Financing Commitment'], 'ESG Report': ['Environmental DD', 'Compliance Certificate'], 'Financial Model': ['Valuation Memo', 'Budget / Forecast'], 'Legal DD': ['SPA', 'Closing Checklist'] };
+      const reasons = { 8: 'Draft watermark detected; stage inferred from filename', 11: 'Multiple document types score within 10%', 13: 'Scanned TIFF with low OCR confidence', 14: 'Spreadsheet export — sparse text content', 15: 'Memo format overlaps SPA disclosure schedules' };
+      const draw = () => {
+        const a = items.filter(d => d.reviewed === 'approved').length, s = items.filter(d => d.reviewed === 'skipped').length, p = items.length - a - s;
+        $('#rv-sum').textContent = `${p} pending · ${a} approved · ${s} skipped`; $('#rv-pct').textContent = `${Math.round((a + s) / items.length * 100)}% complete`;
+        $('#rv-a').style.width = `${a / items.length * 100}%`; $('#rv-s').style.width = `${s / items.length * 100}%`;
+        $('#c-p').textContent = p; $('#c-a').textContent = a; $('#c-s').textContent = s;
+        const shown = items.filter(d => filter === 'all' || (filter === 'pending' ? !d.reviewed : d.reviewed === filter));
+        $('#rv-list').innerHTML = shown.length ? shown.map(d => `<div class="card p4 mb${d.reviewed === 'skipped' ? ' fade' : ''}" style="${d.reviewed === 'approved' ? 'border-color:#86efac' : ''}"><div class="row between" style="align-items:flex-start"><div style="flex:1;min-width:260px">
+            <div class="row"><b class="mono" style="font-size:13px">${esc(d.file)}</b></div><div class="row mt"><span class="badge" style="background:#dbeafe;color:#1d4ed8">${esc(d.type)}</span>${sectorBadge(d.sector)}<span class="sub">${esc(d.folder)}</span>${confBar(d.conf)}</div>
+            <div class="note note-amber mt"><b>Review reason:</b> ${reasons[d.id] || 'Confidence below threshold'}</div>
+            <div class="sub mt">Also considered: ${(alts[d.type] || ['Investment Memo']).map(x => `<span class="chip">${x}</span>`).join(' ')}</div><div class="sub mt">Company: ${esc(d.company)} · Deal: ${esc(d.deal)} · Fund: ${esc(d.fund)}</div></div>
+            <div style="display:flex;flex-direction:column;gap:6px;position:relative">${d.reviewed ? `<span class="badge" style="background:${d.reviewed === 'approved' ? '#d1fae5;color:#047857' : '#f1f5f9;color:#475569'}">${d.reviewed}</span><button class="btn btn-secondary btn-sm" data-undo="${d.id}">Undo</button>` :
+            `<button class="btn btn-green btn-sm" data-act="approved" data-id="${d.id}">✓ Approve</button><button class="btn btn-secondary btn-sm" data-act="skipped" data-id="${d.id}">⏭ Skip</button><button class="btn btn-amber btn-sm" data-corr="${d.id}">→ Correct ▾</button>
+            <div class="dropdown" id="cd-${d.id}" style="top:100px;width:220px"><div class="dd-sec lbl-up">Select correct type:</div>${(alts[d.type] || ['Investment Memo']).map(x => `<a href="#" class="list-row" data-fix="${d.id}" data-type="${x}">${x}</a>`).join('')}<a class="list-row link" href="#detail/${d.id}">Open detail for manual correction…</a></div>`}</div></div></div>`).join('')
+          : empty('✅', 'No documents pending review', 'All caught up!');
+        DI.renderNav();
+      };
+      $('#rv-tabs').addEventListener('click', e => { const t = e.target.closest('.tab'); if (!t) return; $$('#rv-tabs .tab').forEach(x => x.classList.toggle('active', x === t)); filter = t.dataset.f; draw(); });
+      $('#rv-list').addEventListener('click', e => {
+        const act = e.target.closest('[data-act]'), undo = e.target.closest('[data-undo]'), corr = e.target.closest('[data-corr]'), fix = e.target.closest('[data-fix]');
+        if (act) { byId(act.dataset.id).reviewed = act.dataset.act; toast(act.dataset.act === 'approved' ? 'Classification approved' : 'Skipped for now'); draw(); }
+        if (undo) { delete byId(undo.dataset.undo).reviewed; draw(); }
+        if (corr) $(`#cd-${corr.dataset.corr}`).classList.toggle('open');
+        if (fix) { e.preventDefault(); const d = byId(fix.dataset.fix); d.type = fix.dataset.type; d.reviewed = 'approved'; toast(`Reclassified as ${fix.dataset.type}`); draw(); }
+      });
+      draw();
+    },
+  };
+
+  // ---------- Chat ----------
+  const thread = [
+    { u: 'What are the key risks in our Digital Infrastructure investments?' },
+    { a: ANSWERS[0] },
+    { u: 'How many deals by sector are in due diligence this year?' },
+    { a: ANSWERS[1] },
+  ];
+  const msgHtml = m => m.u ? `<div class="msg user"><div class="av">👤</div><div class="bubble">${esc(m.u)}</div></div>`
+    : `<div class="msg bot"><div class="av">🤖</div><div style="max-width:85%"><span class="via">${m.a.tool === 'Cortex Analyst' ? '📊' : '⚡'} via ${m.a.tool}</span><div class="bubble" style="max-width:100%">${m.a.html}${m.a.chart ? `<div class="card p4 mt chart"><div class="chart-title">Deals in Due Diligence by Sector</div>${vbar([['Energy Transition', 3], ['Transportation', 1], ['Digital Infra', 0], ['Water', 0]], PALETTE, 170)}</div>` : ''}</div>
+      <div class="row" style="margin-top:4px"><button class="btn-sm" style="border:0;background:none" data-toast="Feedback recorded">👍</button><button class="btn-sm" style="border:0;background:none" data-toast="Feedback recorded">👎</button></div></div></div>`;
+  pages.chat = {
+    render: () => `<div class="page-wrap w-3xl" style="display:flex;flex-direction:column;min-height:calc(100vh - 140px)">${header('🤖', 'Doc Intelligence Agent', 'Find documents, read content, or ask questions that span search and data', '<button class="btn btn-secondary btn-sm" id="c-new">↺ New conversation</button>')}
+      <div id="c-thread" style="flex:1"></div>
+      <div class="card p4" style="position:sticky;bottom:0"><div class="row"><input id="c-in" style="flex:1" placeholder="Ask the Doc Intelligence Agent…"><button class="btn btn-primary" id="c-send">Send</button></div></div></div>`,
+    mount: (root, q) => {
+      const draw = () => {
+        $('#c-thread').innerHTML = thread.length ? thread.map(msgHtml).join('') : `<div class="card p6" style="text-align:center"><div style="font-size:36px">🤖</div><b>Doc Intelligence Agent</b><div class="sub">Powered by <span class="mono">DEAL_INTELLIGENCE_AGENT</span></div>
+          <div class="grid mt" style="text-align:left">${QUICK.map(x => `<button class="btn btn-secondary" style="justify-content:flex-start;white-space:normal" data-q="${esc(x)}">💬 ${esc(x)}</button>`).join('')}</div></div>`;
+      };
+      const send = text => {
+        text = (text || $('#c-in').value).trim(); if (!text) return;
+        thread.push({ u: text }); $('#c-in').value = ''; draw();
+        $('#c-thread').insertAdjacentHTML('beforeend', `<div class="msg bot" id="typing"><div class="av">🤖</div><div class="bubble"><div class="sub" style="font-style:italic;margin-bottom:6px">Planning the next steps…</div><div class="dots"><span></span><span></span><span></span></div></div></div>`);
+        $('#content').scrollTop = 1e6;
+        setTimeout(() => { thread.push({ a: answer(text) }); draw(); $('#content').scrollTop = 1e6; }, 1400);
+      };
+      $('#c-send').addEventListener('click', () => send()); $('#c-in').addEventListener('keydown', e => e.key === 'Enter' && send());
+      $('#c-new').addEventListener('click', () => { thread.length = 0; draw(); });
+      $('#c-thread').addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (b) send(b.dataset.q); });
+      draw();
+      if (q) send(q);
+    },
+  };
+
+  // ---------- Saved ----------
+  pages.saved = {
+    render: () => `<div class="page-wrap w-4xl">${header('🔖', 'Saved Items', 'Saved searches and bookmarked documents')}
+      ${tabs('sv', [`Saved Searches <span class="cnt">${DATA.savedSearches.length}</span>`, `Bookmarks <span class="cnt">${DATA.bookmarks.length}</span>`])}
+      ${panel('sv', 0, DATA.savedSearches.map(s => `<div class="card p4 mb row between"><div><b>${esc(s.name)}</b><div class="sub">“${esc(s.q)}”</div><div class="sub muted">🕐 ${s.date}</div></div><div class="row"><a class="btn btn-secondary btn-sm" href="#search/${encodeURIComponent(s.q)}">▶ Run</a><button class="btn btn-secondary btn-sm" data-toast="Link copied">🔗 Copy link</button><button class="btn btn-secondary btn-sm" data-toast="Saved search deleted">🗑</button></div></div>`).join(''))}
+      ${panel('sv', 1, DATA.bookmarks.map(b => { const d = byId(b.doc); return `<a class="card p4 mb row between" href="#detail/${d.id}"><div class="row" style="align-items:flex-start"><span class="gold" style="font-size:18px">🔖</span><div><b>${esc(d.type)}</b> — ${esc(d.company !== '—' ? d.company : d.fund)}<div class="sub"><i>${esc(b.note)}</i></div><div class="mono muted">${esc(d.file)} · ${b.date}</div></div></div><span>›</span></a>`; }).join(''))}</div>`,
+  };
+
+  // ---------- Help ----------
+  const HELP = [
+    ['🚀', 'Getting Started', 'DealIntel ingests deal documents from Snowflake stages, classifies them with AI_CLASSIFY, extracts structured deal attributes with AI_EXTRACT, and makes everything searchable. Start on the Overview page for pipeline health and portfolio analytics.'],
+    ['🔍', 'Document Search', 'Type a natural-language query. Cortex Search combines semantic vector similarity with keyword matching and reranking. Use Filters to narrow by sector, type, format or status, and 💾 to save a search.'],
+    ['🤖', 'Ask a Question (Chat)', 'The Doc Intelligence Agent routes each question to document search, page-level search, or Cortex Analyst for numeric questions. Answers cite the source file and page — click a citation to preview.'],
+    ['📂', 'Document Browser', 'Browse the full catalog with filters. Click a row for the attribute panel, submit corrections, or select multiple rows for batch actions.'],
+    ['✅', 'Review Queue', 'Documents with classification confidence below the threshold land here. Approve, skip, or pick the correct type from the AI\'s alternative suggestions.'],
+    ['📊', 'Portfolio Analytics', 'Ask numeric questions in plain English — Cortex Analyst generates SQL over the semantic view and returns tables and charts.'],
+    ['🔖', 'Saved Items', 'Re-run saved searches and return to bookmarked documents.'],
+    ['🛡', 'Administration', 'Admins manage the pipeline, extraction schema, classification labels, sectors, notifications, configuration and user entitlements.'],
+  ];
+  pages.help = {
+    render: () => `<div class="page-wrap w-3xl">${header('❓', 'Help & Documentation', 'How to get the most out of DealIntel')}
+      ${HELP.map(h => `<div class="card mb"><div class="row" style="padding:10px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);border-radius:12px 12px 0 0"><span>${h[0]}</span><b>${h[1]}</b></div><p style="padding:0 16px;font-size:13px;line-height:1.6;color:var(--text-2)">${h[2]}</p></div>`).join('')}
+      <div class="card p4 note-blue note"><b>💡 Tips</b><ul style="margin:6px 0 0;padding-left:18px"><li>Scope a search to one file with “Search within this document”.</li><li>Corrections train the review workflow — admins approve them in Quality &amp; Feedback.</li><li>Dark mode lives in the user menu, top right.</li></ul></div></div>`,
+  };
+})();
+
+</script>
+  <script>
+/* DealIntel demo — admin screens */
+(function () {
+  const { $, $$, esc, pages, header, stat, tabs, panel, empty, sectorBadge, statusBadge, fmtTag, confText, docLink, hbar, vbar, line, countBy, toast } = DI;
+  const D = DATA.docs;
+  const table = (cols, rows) => `<div class="table-wrap"><table class="t"><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
+  const tr = cells => `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+  const refresh = '<button class="btn btn-secondary btn-sm" data-toast="Refreshed">↻ Refresh</button>';
+
+  // ---------- Pipeline ----------
+  const STEPS = [['Register Files', 'Scan stages for new documents', '📥'], ['Parse Documents', 'AI_PARSE_DOCUMENT on pending files', '📄'], ['Classify', 'AI_CLASSIFY document types', '🏷️'], ['Extract', 'AI_EXTRACT deal attributes', '🧬']];
+  pages['admin-pipeline'] = {
+    render: () => { const R = DATA.registry, c = s => R.filter(r => r.status === s).length; return `<div class="page-wrap w-6xl">${header('📈', 'Pipeline Management', 'Parse → Classify → Extract → Catalog', refresh)}
+      <div class="grid g4 mb">${stat('Complete', c('COMPLETE'), '', '#16a34a')}${stat('Pending', c('PENDING'), '', '#d97706')}${stat('Processing', c('PROCESSING'), '', '#2563eb')}${stat('Failed', c('FAILED'), '', '#dc2626')}</div>
+      ${tabs('pl', ['▦ Overview', '⬆ Upload', '🗄 Stages', '▶ Run Pipeline', '📜 Processing Logs', '↻ Reprocess'])}
+      <div class="card p5">
+      ${panel('pl', 0, `<h3 class="section-title">Pipeline Tasks</h3>${table(['Task', 'State', 'Schedule', ''], DATA.tasks.map(t => tr([`<span class="mono">${t.name}</span>`, t.state === 'started' ? '<span class="badge" style="background:#dcfce7;color:#15803d">▶ started</span>' : '<span class="badge" style="background:#f1f5f9;color:#475569">⏸ suspended</span>', t.sched, `<button class="btn btn-secondary btn-sm" data-task="${t.name}">${t.state === 'started' ? 'Suspend' : 'Resume'}</button>`])))}`)}
+      ${panel('pl', 1, `<div class="dropzone" id="drop"><div style="font-size:32px">⬆</div><b>Drop a file here or click to browse</b><div class="sub">PDF, TIFF, DOCX, JPEG, PNG, HTML, TXT (max 50MB)</div></div><button class="btn btn-primary mt" data-toast="File uploaded to @deal_documents_stage and registered">Upload and Register</button>`)}
+      ${panel('pl', 2, `${[['DEAL_DOCUMENTS_STAGE', 'Primary deal document drop', 'deals/', true], ['IR_REPORTS_STAGE', 'LP reports from fund admin', 'ir/', true], ['LEGACY_SCANS_STAGE', 'Historical scanned archive', 'scans/', false]].map(s => `<div class="list-row"><span class="mono" style="flex:1">@${s[0]}<div class="sub">${s[1]} · prefix <span class="mono">${s[2]}</span></div></span><button class="switch${s[3] ? ' on' : ''}"></button><button class="btn btn-secondary btn-sm" data-toast="Stage removed">Remove</button></div>`).join('')}
+        <div class="card p4 mt"><b>Add New Stage</b><div class="row mt"><input placeholder="Stage name"><input placeholder="Description"><input placeholder="Path prefix"><button class="btn btn-primary btn-sm" data-toast="Stage added">Add Stage</button></div></div>
+        <div class="card p4 mt row between"><div><b>Discover Available Stages</b><div class="sub">Scan the database for stages not yet registered</div></div><button class="btn btn-secondary btn-sm" data-toast="Found 1 unregistered stage: @DATA_ROOM_EXPORT">🔎 Scan Database</button></div>`)}
+      ${panel('pl', 3, `<p class="sub">Steps run sequentially: Register → Parse → Classify → Extract</p><div class="grid g4">${STEPS.map((s, i) => `<div class="card p4"><div style="font-size:22px">${s[2]}</div><b>${i + 1}. ${s[0]}</b><div class="sub" style="min-height:34px">${s[1]}</div><button class="btn btn-secondary btn-sm mt" data-step="${i}">▶ Run</button><div class="sub mt" id="step-${i}"></div></div>`).join('')}</div><button class="btn btn-primary mt" id="run-all">▶ Run Full Pipeline</button>`)}
+      ${panel('pl', 4, `<div class="row between mb"><b>Processing Logs (${R.length} total)</b><select><option>All statuses</option><option>FAILED</option><option>COMPLETE</option></select></div>${table(['File', 'Status', 'Folder', 'Type', 'Portfolio Co.', 'Error'], R.slice(0, 12).map((r, i) => tr([`<span class="mono">${esc(r.file)}</span>`, statusBadge(r.status), r.folder, esc(D[i]?.type || '—'), esc(D[i]?.company || '—'), `<span style="color:#dc2626">${esc(r.err)}</span>`])))}`)}
+      ${panel('pl', 5, `<div class="row mb"><input placeholder="Filter by filename" style="flex:1"><select><option>All statuses</option></select><select><option>All sectors</option></select></div>
+        <div class="row between sub mb"><span id="rp-n">${D.length} documents · 0 selected</span><span class="row"><button class="btn btn-secondary btn-sm" id="rp-all">Select All</button><button class="btn btn-secondary btn-sm" id="rp-clr">Clear</button></span></div>
+        <div class="card" style="max-height:320px;overflow:auto">${D.map(d => `<label class="list-row"><input type="checkbox" class="rp"><span class="mono" style="flex:1">${esc(d.file)}</span>${sectorBadge(d.sector)}<span class="chip">${esc(d.type)}</span>${statusBadge('complete')}</label>`).join('')}</div>
+        <div class="row mt"><button class="btn btn-primary" id="rp-go">Reprocess Selected (0)</button><button class="btn btn-amber" data-toast="${D.length} documents queued for reprocessing">Reprocess All Filtered (${D.length})</button></div>`)}
+      </div></div>`; },
+    mount: root => {
+      root.addEventListener('click', e => {
+        const t = e.target.closest('[data-task]');
+        if (t) { const task = DATA.tasks.find(x => x.name === t.dataset.task); task.state = task.state === 'started' ? 'suspended' : 'started'; toast(`${task.name} ${task.state}`); const row = t.closest('tr'); row.cells[1].innerHTML = task.state === 'started' ? '<span class="badge" style="background:#dcfce7;color:#15803d">▶ started</span>' : '<span class="badge" style="background:#f1f5f9;color:#475569">⏸ suspended</span>'; t.textContent = task.state === 'started' ? 'Suspend' : 'Resume'; }
+        const s = e.target.closest('[data-step]');
+        if (s) runStep(+s.dataset.step);
+      });
+      const runStep = (i, next) => { $(`#step-${i}`).innerHTML = '⏳ Running…'; setTimeout(() => { $(`#step-${i}`).innerHTML = `<span style="color:#16a34a">✓ ${[3, 3, 3, 3][i]} files processed</span>`; next ? next() : toast(`${STEPS[i][0]} complete`); }, 900); };
+      $('#run-all').addEventListener('click', () => runStep(0, () => runStep(1, () => runStep(2, () => runStep(3)))));
+      $('#drop').addEventListener('click', () => toast('File picker is simulated in the demo', 'info'));
+      const cnt = () => { const n = $$('.rp:checked').length; $('#rp-n').textContent = `${D.length} documents · ${n} selected`; $('#rp-go').textContent = `Reprocess Selected (${n})`; };
+      $$('.rp').forEach(c => c.addEventListener('change', cnt));
+      $('#rp-all').addEventListener('click', () => { $$('.rp').forEach(c => c.checked = true); cnt(); });
+      $('#rp-clr').addEventListener('click', () => { $$('.rp').forEach(c => c.checked = false); cnt(); });
+      $('#rp-go').addEventListener('click', () => { toast(`${$$('.rp:checked').length} documents queued for reprocessing`); $('#rp-clr').click(); });
+    },
+  };
+
+  // ---------- Registry ----------
+  pages['admin-registry'] = {
+    render: () => `<div class="page-wrap w-6xl">${header('📋', 'Ingestion Registry', 'Every file discovered on registered stages', refresh)}
+      <div class="card p4 mb row"><select id="rg-s"><option value="">All statuses</option>${['PENDING', 'PROCESSING', 'COMPLETE', 'FAILED', 'ABANDONED'].map(s => `<option>${s}</option>`).join('')}</select><input id="rg-q" placeholder="Search file name…"><span class="sub" id="rg-n" style="margin-left:auto"></span></div>
+      <div class="card" id="rg-t"></div></div>`,
+    mount: () => {
+      const draw = () => {
+        const s = $('#rg-s').value, q = $('#rg-q').value.toLowerCase(), rows = DATA.registry.filter(r => (!s || r.status === s) && r.file.toLowerCase().includes(q));
+        $('#rg-n').textContent = `${rows.length} total documents`;
+        $('#rg-t').innerHTML = table(['File Path', 'Format', 'Folder', 'Status', 'Ver', 'Attempts', 'First Seen', 'Last Error', ''], rows.map(r => tr([`<a class="link mono" href="#">${esc(r.file)}</a>`, fmtTag(r.fmt), r.folder, statusBadge(r.status), r.ver, r.attempts, `<span class="sub">${r.seen}</span>`, `<span style="color:#dc2626">${esc(r.err)}</span>`, `<button class="btn btn-secondary btn-sm" data-toast="Requeued ${esc(r.file)}">↺</button>`])));
+      };
+      $('#rg-s').addEventListener('change', draw); $('#rg-q').addEventListener('input', draw); draw();
+    },
+  };
+
+  // ---------- Quality ----------
+  pages['admin-quality'] = {
+    render: () => { const avg = D.reduce((s, d) => s + d.conf, 0) / D.length, low = D.filter(d => d.review).length;
+      const bySec = Object.entries(D.reduce((m, d) => ((m[d.sector] = m[d.sector] || []).push(d.conf), m), {})).map(([k, v]) => [k, Math.round(v.reduce((a, b) => a + b, 0) / v.length * 100)]);
+      return `<div class="page-wrap w-5xl">${header('☑️', 'Quality & Feedback', 'Extraction confidence, corrections and user feedback', refresh)}
+      <div class="grid g4 mb">${stat('Avg Confidence', (avg * 100).toFixed(1) + '%', '', '#166534')}${stat('Low Conf Docs', low, '', '#d97706')}${stat('Low Conf %', Math.round(low / D.length * 100) + '%', '', '#d97706')}${stat('Document Types', new Set(D.map(d => d.type)).size, '', '#1e40af')}</div>
+      <div class="grid g2 mb"><div class="card p5 chart"><div class="chart-title">Corrections by Field</div>${hbar([['deal_stage', 7], ['document_type', 5], ['target_company', 4], ['fund_name', 2], ['investment_date', 1]], '#f59e0b')}</div>
+        <div class="card p5 chart"><div class="chart-title">Avg Confidence by Sector (%)</div>${vbar(bySec, ['#29B5E8', '#11567F', '#C5A55A', '#7C3AED', '#22C55E'])}</div></div>
+      <div class="card p5 mb"><h3 class="section-title">Pending Corrections (${DATA.corrections.length})</h3><div id="corr-t">${table(['File', 'Field', 'Original', 'Corrected', 'Submitted By', 'Date', ''], DATA.corrections.map((c, i) => `<tr data-i="${i}"><td class="mono">${esc(c.file)}</td><td><b>${c.field}</b></td><td style="color:#dc2626;text-decoration:line-through">${esc(c.orig)}</td><td style="color:#16a34a">${esc(c.corr)}</td><td>${c.by}</td><td>${c.date}</td><td style="white-space:nowrap"><button class="btn btn-green btn-sm" data-ok>✓</button> <button class="btn btn-red btn-sm" data-no>⊗</button></td></tr>`))}</div></div>
+      <div class="card p5"><h3 class="section-title">Recent User Feedback (${DATA.feedback.length})</h3>${table(['Type', 'File', 'Query', 'User', 'Date'], DATA.feedback.map(f => tr([f.up ? '<span style="color:#16a34a">👍</span>' : '<span style="color:#dc2626">👎</span>', `<span class="mono">${esc(f.file)}</span>`, esc(f.q), f.user, f.date])))}</div></div>`; },
+    mount: () => $('#corr-t').addEventListener('click', e => {
+      const b = e.target.closest('[data-ok],[data-no]'); if (!b) return;
+      const row = b.closest('tr'); row.style.opacity = '.4'; row.lastElementChild.innerHTML = b.hasAttribute('data-ok') ? '<span style="color:#16a34a">Approved</span>' : '<span style="color:#dc2626">Rejected</span>';
+      toast(b.hasAttribute('data-ok') ? 'Correction applied to catalog' : 'Correction rejected');
+    }),
+  };
+
+  // ---------- Cost ----------
+  pages['admin-cost'] = {
+    render: () => { const cr = DATA.credits, last = cr[cr.length - 1]; return `<div class="page-wrap w-5xl">${header('💲', 'Credit Cost Dashboard', 'Snowflake credit consumption for the DealIntel pipeline', refresh)}
+      <div class="grid g3 mb">${stat('Total Credits (30 days)', last.toFixed(3), '')}${stat('Daily Average', (last / 30).toFixed(3), 'Credits/day')}${stat('Projected Monthly', (last * 1.04).toFixed(2), 'Based on trailing daily average')}</div>
+      <div class="card p5 mb chart"><div class="chart-title">Monthly Credit Usage (1 year)</div>${line(DATA.months, cr)}</div>
+      <div class="grid g2 mb"><div class="card p5 chart"><div class="chart-title">Credits by Stage (1 year)</div>${hbar([['Parse', 38.2], ['Extract', 29.7], ['Classify', 14.1], ['Search Index', 11.8], ['Agent', 8.6], ['Analyst', 3.0]])}</div>
+        <div class="card p5 chart"><div class="chart-title">Credits by Event Type (1 year)</div>${vbar([['AI_PARSE', 38], ['AI_EXTRACT', 30], ['AI_CLASSIFY', 14], ['EMBED', 12], ['COMPLETE', 11]])}</div></div>
+      <div class="card p5"><h3 class="section-title">💡 Cost Optimization Tips</h3><div class="grid g2">${[['Prefer digital PDFs', 'Native-text PDFs skip OCR and parse ~4× cheaper than scans.'], ['Filter first pages', 'Classify on the first 3 pages — enough signal for most document types.'], ['Right-size warehouse', 'XS/S is sufficient for pipeline tasks; scale up only for backfills.'], ['Incremental only', 'Dynamic Table + primary keys avoid re-embedding unchanged documents.']].map(t => `<div class="card p4"><b>${t[0]}</b><div class="sub mt">${t[1]}</div></div>`).join('')}</div></div></div>`; },
+  };
+
+  // ---------- Extraction Schema ----------
+  const TIER_STYLE = { Common: ['🌐', '#d1fae5', '#047857'], Category: ['🏷', '#dbeafe', '#1d4ed8'], 'Sector-Specific': ['⚡', '#f3e8ff', '#7e22ce'] };
+  pages['admin-schema'] = {
+    render: () => `<div class="page-wrap w-5xl">${header('⌨️', 'Extraction Schema', 'Configure which attributes AI_EXTRACT pulls from each document', '<button class="btn btn-primary btn-sm" id="add-attr">+ Add Attribute</button><button class="btn btn-secondary btn-sm" data-toast="Schema reloaded">↻ Reload</button>')}
+      ${tabs('es', ['▤ Schema Configuration', '🧪 Test Lab'])}
+      ${panel('es', 0, `<p class="sub">Three-tier extraction model. <b>Common</b> attributes apply to every document, <b>Category</b> attributes to a document category, and <b>Sector-Specific</b> attributes to a sector.</p>
+        <div class="row mb" id="tiers">${Object.keys(DATA.schema).map((t, i) => `<button class="badge" data-tier="${t}" style="border:0;background:${TIER_STYLE[t][1]};color:${TIER_STYLE[t][2]};padding:6px 14px;${i === 0 ? 'box-shadow:0 0 0 2px ' + TIER_STYLE[t][2] : ''}">${TIER_STYLE[t][0]} ${t} (${Object.keys(DATA.schema[t]).length})</button>`).join('')}</div>
+        <div class="card p4 mb hidden" id="attr-form" style="border-color:var(--brand-primary)"><div class="grid g3"><input placeholder="Attribute name"><input placeholder="Description (AI prompt)"><select><option>VARCHAR</option><option>DATE</option><option>NUMBER</option><option>VARIANT</option></select></div><button class="btn btn-primary btn-sm mt" data-toast="Attribute added">Save Attribute</button></div>
+        <div class="split"><div class="card p4" style="width:220px;flex-shrink:0" id="groups"></div><div class="main card" id="attrs"></div></div><div id="test-res"></div>`)}
+      ${panel('es', 1, `<p class="sub">Parse → Classify → Detect Sector → Resolve Schema → Extract. Results are <b>not saved</b>.</p>
+        <div class="card p4 mb"><div class="row"><select style="width:288px"><option>@DEAL_DOCUMENTS_STAGE</option><option>@IR_REPORTS_STAGE</option></select><button class="btn btn-secondary btn-sm" data-toast="Upload is simulated">⬆ Upload File</button><button class="btn btn-primary btn-sm" id="tl-run">▶ Run Pipeline (<span id="tl-n">2</span>)</button></div>
+          <div class="note note-blue mt" id="tl-pins"></div>
+          <div class="sub mt mb">${D.length} of ${D.length} files</div><div style="max-height:220px;overflow:auto">${D.map((d, i) => `<label class="list-row"><input type="checkbox" class="pin" data-i="${i}" ${i < 2 ? 'checked' : ''}>📌<span class="mono" style="flex:1">${esc(d.file)}</span><span class="sub">${(d.pages * 41.3).toFixed(0)} KB</span></label>`).join('')}</div></div>
+        <div id="tl-out"></div>`)}</div>`,
+    mount: () => {
+      let tier = 'Common', group = Object.keys(DATA.schema.Common)[0];
+      const drawGroups = () => {
+        const gs = DATA.schema[tier];
+        if (!gs[group]) group = Object.keys(gs)[0];
+        $('#groups').innerHTML = `<div class="lbl-up mb">${tier} Groups</div>${Object.keys(gs).map(g => `<a href="#" class="list-row" data-group="${g}" style="border-radius:6px;${g === group ? 'background:var(--brand-pale);color:var(--brand-primary);font-weight:600' : ''}">${g}<span class="chip" style="margin-left:auto">${gs[g].attrs.length}</span></a>`).join('')}
+          <div class="lbl-up mt">Fires when</div>${Object.entries(gs[group].rule).map(([k, v]) => `<div class="sub mono">${k}: ${v}</div>`).join('')}`;
+        const st = TIER_STYLE[tier];
+        $('#attrs').innerHTML = `<div class="row p4" style="border-bottom:1px solid var(--border)"><b>${group} — ${gs[group].attrs.length} attributes</b><span class="badge" style="background:${st[1]};color:${st[2]}">${tier}</span></div>${table(['#', 'Attribute', 'Description', 'Type', ''], gs[group].attrs.map((a, i) => tr([i + 1, `<span class="mono">${a[0]}</span>`, esc(a[1]), `<span class="chip">${a[2]}</span>`, `<button class="btn-sm" style="border:0;background:none" data-test="${a[0]}">🧪</button><button class="btn-sm" style="border:0;background:none" data-toast="Attribute removed">🗑</button>`])))}`;
+      };
+      const drawPins = () => { const p = $$('.pin:checked'); $('#tl-n').textContent = p.length; $('#tl-pins').innerHTML = `📌 <b>Test List (${p.length} pinned)</b>` + p.map(c => `<div class="mono" style="margin-top:4px">${esc(D[c.dataset.i].file)}</div>`).join(''); };
+      $('#tiers').addEventListener('click', e => { const b = e.target.closest('[data-tier]'); if (!b) return; tier = b.dataset.tier; $$('#tiers [data-tier]').forEach(x => x.style.boxShadow = x === b ? `0 0 0 2px ${TIER_STYLE[x.dataset.tier][2]}` : ''); drawGroups(); });
+      $('#groups').addEventListener('click', e => { const g = e.target.closest('[data-group]'); if (g) { e.preventDefault(); group = g.dataset.group; drawGroups(); } });
+      $('#attrs').addEventListener('click', e => { const t = e.target.closest('[data-test]'); if (t) $('#test-res').innerHTML = `<div class="note note-blue mt row between"><span>Testing <span class="mono">${t.dataset.test}</span> on <span class="mono">${esc(D[0].file)}</span> — Result: <b>${esc(D[0][{ target_company: 'company', deal_name: 'deal', sponsor_name: 'sponsor', sector: 'sector', deal_stage: 'stage', enterprise_value: 'ev', equity_check: 'equity', target_irr: 'irr', target_moic: 'moic', key_risks: 'risks', fund_name: 'fund' }[t.dataset.test]] || 'null (not found)')}</b></span><button class="btn btn-secondary btn-sm" id="dismiss">Dismiss</button></div>`; });
+      $('#test-res').addEventListener('click', e => { if (e.target.id === 'dismiss') $('#test-res').innerHTML = ''; });
+      $('#add-attr').addEventListener('click', () => $('#attr-form').classList.toggle('hidden'));
+      $$('.pin').forEach(c => c.addEventListener('change', drawPins));
+      $('#tl-run').addEventListener('click', () => {
+        const p = $$('.pin:checked').map(c => D[c.dataset.i]);
+        $('#tl-out').innerHTML = '<div class="card p4">⏳ Running parse → classify → extract…</div>';
+        setTimeout(() => { $('#tl-out').innerHTML = `<div class="row mb"><b>${p.length} files processed</b><span class="badge" style="background:#fef3c7;color:#b45309">Test mode — not saved</span></div>` + p.map((d, i) => `<details class="card mb" ${i === 0 ? 'open' : ''}><summary class="p4 row" style="cursor:pointer"><span class="mono">${esc(d.file)}</span><span class="badge" style="background:#dbeafe;color:#1d4ed8">${esc(d.type)}</span>${sectorBadge(d.sector)}<span class="sub">9 fields</span></summary>
+          ${table(['', 'Field', 'Value', 'Tier'], [['target_company', d.company, 'Common'], ['deal_name', d.deal, 'Common'], ['sector', d.sector, 'Common'], ['deal_stage', d.stage, 'Common'], ['enterprise_value', d.ev, 'Category · Deal Sourcing'], ['equity_check', d.equity, 'Category · Deal Sourcing'], ['target_irr', d.irr, 'Category · Deal Sourcing'], ['key_risks', d.risks, 'Category · Due Diligence'], ['mw_capacity', d.sector === 'Digital Infrastructure' ? '300' : null, 'Sector · DINFRA']].map(f => tr([f[1] && f[1] !== '—' ? '<span style="color:#16a34a">✓</span>' : '<span style="color:#dc2626">✗</span>', `<span class="mono">${f[0]}</span>`, f[1] && f[1] !== '—' ? esc(f[1]) : '<span class="muted">not found</span>', `<span class="chip">${f[2]}</span>`])))}</details>`).join(''); }, 1200);
+      });
+      drawGroups(); drawPins();
+    },
+  };
+
+  // ---------- Classification Labels ----------
+  pages['admin-labels'] = {
+    render: () => `<div class="page-wrap w-3xl">${header('🏷️', 'Classification Labels', 'Labels AI_CLASSIFY chooses from, grouped by category')}
+      <div class="card p4 mb row"><input placeholder="Label name" style="flex:1"><select>${Object.keys(DATA.labels).map(c => `<option>${c}</option>`).join('')}</select><button class="btn btn-secondary btn-sm" data-toast="New category form (demo)">📁+</button><button class="btn btn-primary btn-sm" data-toast="Label added">+ Add</button></div>
+      ${Object.entries(DATA.labels).map(([cat, ls], ci) => `<div class="card mb"><div class="row between p4" style="border-bottom:1px solid var(--border)"><b>${cat} (${ls.length})</b><span><button class="btn-sm" style="border:0;background:none" data-toast="Rename category (demo)">✏️</button><button class="btn-sm" style="border:0;background:none" data-toast="Delete category (demo)">🗑</button></span></div>
+        ${ls.map((l, i) => `<div class="list-row${(ci + i) % 7 === 6 ? ' fade' : ''}"><span style="flex:1">${l}</span><button class="switch${(ci + i) % 7 === 6 ? '' : ' on'}"></button><button class="btn-sm" style="border:0;background:none" data-toast="Label deleted">🗑</button></div>`).join('')}</div>`).join('')}</div>`,
+  };
+
+  // ---------- Sectors ----------
+  pages['admin-sectors'] = {
+    render: () => `<div class="page-wrap w-3xl">${header('💼', 'Investment Sectors', 'Sectors drive AI classification and access control', refresh + '<button class="btn btn-primary btn-sm" id="sec-add">+ Add Sector</button>')}
+      <div class="card p4 mb hidden" id="sec-form"><div class="grid g3"><input placeholder="Sector code"><input placeholder="Display name"><input placeholder="Description"></div><div class="row mt"><button class="btn btn-primary btn-sm" data-toast="Sector created">Create</button><button class="btn btn-secondary btn-sm" id="sec-cancel">Cancel</button></div></div>
+      <div class="card">${table(['Code', 'Name', 'Description', 'Active', ''], DATA.sectors.map(s => tr([`<span class="mono">${s.code}</span>`, `<b>${s.name}</b>`, `<span class="sub">${s.desc}</span>`, `<button class="switch${s.active ? ' on' : ''}"></button>`, '<button class="btn-sm" style="border:0;background:none" data-toast="Inline edit (demo)">✏️</button><button class="btn-sm" style="border:0;background:none" data-toast="Sector deleted">🗑</button>'])))}</div></div>`,
+    mount: () => { $('#sec-add').addEventListener('click', () => $('#sec-form').classList.remove('hidden')); $('#sec-cancel').addEventListener('click', () => $('#sec-form').classList.add('hidden')); },
+  };
+
+  // ---------- Notifications ----------
+  const EVENTS = ['INGEST', 'PARSE', 'CLASSIFY', 'EXTRACT', 'ALERT', 'ARCHIVE', 'PURGE', 'OVERRIDE', 'FEEDBACK', 'DOWNLOAD'];
+  pages['admin-notifications'] = {
+    render: () => `<div class="page-wrap w-3xl">${header('🔔', 'Notification Rules', 'Route pipeline events to webhooks or email', '<button class="btn btn-primary btn-sm" id="nt-add">+ Add Rule</button>' + refresh)}
+      <div class="card p4 mb hidden" id="nt-form"><div class="grid g2"><select><option>Webhook (HTTP POST)</option><option>Email (Snowflake Integration)</option></select><input placeholder="Endpoint / address"></div>
+        <div class="lbl-up mt">Event types</div><div class="row mt">${EVENTS.map(e => `<label class="chip row"><input type="checkbox">${e}</label>`).join('')}</div><div class="row mt"><input type="number" value="0" style="width:120px"><span class="sub">Threshold (0 = all events)</span></div>
+        <div class="row mt"><button class="btn btn-primary btn-sm" data-toast="Rule saved">Save Rule</button><button class="btn btn-secondary btn-sm" id="nt-cancel">Cancel</button></div></div>
+      ${DATA.notifications.map(n => `<div class="card p4 mb row between"><div><b style="text-transform:uppercase;font-size:12px">${n.ch === 'webhook' ? '🌐' : '✉️'} ${n.ch}</b><div class="mono mt">${esc(n.ep)}</div><div class="row mt">${n.events.map(e => `<span class="chip" style="background:#dbeafe;color:#1d4ed8">${e}</span>`).join('')}</div></div><div class="row"><button class="switch${n.on ? ' on' : ''}"></button><button class="btn-sm" style="border:0;background:none" data-toast="Rule deleted">🗑</button></div></div>`).join('')}</div>`,
+    mount: () => { $('#nt-add').addEventListener('click', () => $('#nt-form').classList.remove('hidden')); $('#nt-cancel').addEventListener('click', () => $('#nt-form').classList.add('hidden')); },
+  };
+
+  // ---------- Config ----------
+  pages['admin-config'] = {
+    render: () => `<div class="page-wrap w-4xl">${header('⚙️', 'System Configuration', 'Runtime settings stored in ADMIN.app_config')}
+      ${Object.entries(DATA.config).map(([g, rows]) => `<div class="card mb"><div class="p4" style="border-bottom:1px solid var(--border)"><b>${g}</b></div>${rows.map(r => `<div class="list-row"><div style="flex:1"><div class="mono"><b>${r[0]}</b></div><div class="sub">${r[1]}</div></div>${r[0] === 'search_embedding_model' ? `<span class="chip">🔒 ${r[2]}</span>` : r[0] === 'pipeline_enabled' ? `<select><option>Enabled</option><option>Disabled</option></select>` : /model/.test(r[0]) ? `<select><option>${r[2]}</option><option>claude-opus-4-5</option><option>llama3.3-70b</option><option>mistral-large2</option></select>` : `<input value="${esc(r[2])}" style="width:220px">`}${r[0] === 'search_embedding_model' ? '' : '<button class="btn btn-secondary btn-sm cfg-save">Save</button>'}</div>`).join('')}</div>`).join('')}</div>`,
+    mount: root => root.addEventListener('click', e => { const b = e.target.closest('.cfg-save'); if (b) { b.textContent = '✓ Saved'; b.style.color = '#16a34a'; toast('Setting saved'); } }),
+  };
+
+  // ---------- Audit ----------
+  pages['admin-audit'] = {
+    render: () => { const A = DATA.audit; return `<div class="page-wrap w-5xl">${header('🛡️', 'Audit Log', 'Downloads, overrides, archives and purges', '<button class="btn btn-secondary btn-sm" data-toast="Exported audit_log.csv">⬇ Export CSV</button>' + refresh)}
+      <div class="card p4 mb row"><select><option>Last 7 days</option><option>Last 14 days</option><option>Last 30 days</option><option>Last 90 days</option></select><select id="au-t"><option value="">All event types</option>${[...new Set(A.map(a => a[2]))].map(t => `<option>${t}</option>`).join('')}</select><select id="au-u"><option value="">All users</option>${[...new Set(A.map(a => a[1]))].map(u => `<option>${u}</option>`).join('')}</select></div>
+      <div class="grid g4 mb">${countBy(A.map(a => ({ t: a[2], u: a[1] })), 't').slice(0, 4).map(([t, n]) => stat(t, n, `${new Set(A.filter(a => a[2] === t).map(a => a[1])).size} users`)).join('')}</div>
+      <div class="card"><div class="p4" style="border-bottom:1px solid var(--border)"><b id="au-n"></b></div><div id="au-rows" style="max-height:500px;overflow:auto"></div></div></div>`; },
+    mount: () => {
+      const draw = () => { const t = $('#au-t').value, u = $('#au-u').value, rows = DATA.audit.filter(a => (!t || a[2] === t) && (!u || a[1] === u));
+        $('#au-n').textContent = `Events (${rows.length})`;
+        $('#au-rows').innerHTML = table(['Timestamp', 'User', 'Event Type', 'File'], rows.map(a => tr([`<span class="mono">${a[0]}</span>`, a[1], `<span class="chip" style="background:#dbeafe;color:#1d4ed8">${a[2]}</span>`, `<span class="mono">${esc(a[3])}</span>`]))); };
+      $('#au-t').addEventListener('change', draw); $('#au-u').addEventListener('change', draw); draw();
+    },
+  };
+
+  // ---------- Users ----------
+  const APP_PAGES = ['Dashboard', 'Document Search', 'Review Queue', 'Ask a Question', 'Analytics', 'Document Browser', 'Saved Searches', 'Help'];
+  pages['admin-users'] = {
+    render: () => `<div class="page-wrap w-6xl">${header('👥', 'Access Management', 'Entitlement roles control pages, sectors and document types')}
+      ${tabs('us', ['👥 Users', '⚙ Roles', '📍 Investment Sectors'], 0, 'segtabs')}
+      ${panel('us', 0, `<div class="note note-amber mb">2 Snowflake role member(s) not yet configured</div>
+        <div class="row mb"><button class="btn btn-secondary btn-sm" data-toast="Synced 2 users from DEAL_INTEL_USER">⇅ Sync from Roles</button>${refresh}<button class="btn btn-primary btn-sm" id="u-add">+ Add User</button></div>
+        <div class="card p4 mb hidden" id="u-form" style="border-color:#93c5fd"><select style="width:100%"><option>ALEX.RIVERA (unregistered)</option><option>NINA.PATEL (unregistered)</option><option>Enter manually…</option></select>
+          <div class="lbl-up mt">Assigned roles (access = union of all selected roles)</div><div class="grid g2 mt">${DATA.roles.map(r => `<label class="card p4 row"><input type="checkbox"><div><b>${r.name}</b><div class="sub">${r.desc}</div></div></label>`).join('')}</div><button class="btn btn-primary btn-sm mt" data-toast="User added">Save User</button></div>
+        <div class="card"><div class="p4" style="border-bottom:1px solid var(--border)"><b>Users (${DATA.users.length})</b></div>${table(['User', 'Assigned Roles', 'Status', ''], DATA.users.map(u => tr([`<span class="mono">${u.user}</span>`, u.roles.map(r => `<span class="chip" style="background:#e0e7ff;color:#4338ca">${r}</span>`).join(' '), u.active ? '<span style="color:#16a34a;font-weight:600">Active</span>' : '<span style="color:#dc2626;font-weight:600">Inactive</span>', `<button class="btn btn-secondary btn-sm" data-toast="Edit user (demo)">Edit</button> <button class="btn btn-secondary btn-sm" data-toast="${u.active ? 'User deactivated' : 'User reactivated'}">${u.active ? 'Deactivate' : 'Reactivate'}</button>`])))}</div>`)}
+      ${panel('us', 1, `<div class="row mb">${refresh}<button class="btn btn-primary btn-sm" id="r-add">+ Create Role</button></div>
+        <div class="card p5 mb hidden" id="r-form"><div class="grid g2"><input placeholder="Role name" value="Portfolio Ops"><input placeholder="Description" value="Portfolio monitoring documents"></div>
+          <div class="lbl-up mt">App Pages</div><div class="row mt">${APP_PAGES.map((p, i) => `<label class="chip row"><input type="checkbox" ${i < 6 ? 'checked' : ''}>${p}</label>`).join('')}</div>
+          <div class="lbl-up mt">Sector Access</div><div class="row mt">${DATA.sectors.map(s => `<label class="chip row"><input type="checkbox" ${['DINFRA', 'TRANS'].includes(s.code) ? 'checked' : ''}>${s.code}</label>`).join('')}</div>
+          <div class="lbl-up mt">Document Type Access</div>${Object.entries(DATA.labels).map(([c, ls], i) => `<details class="mt"><summary class="sub" style="cursor:pointer"><b>${c}</b> ${i === 3 ? ls.length : 0}/${ls.length}</summary><div class="row mt">${ls.map(l => `<label class="chip row"><input type="checkbox" ${i === 3 ? 'checked' : ''}>${l}</label>`).join('')}</div></details>`).join('')}
+          <label class="row mt sub"><input type="checkbox"> Allow document downloads</label><button class="btn btn-primary btn-sm mt" data-toast="Role saved">Save Role</button></div>
+        <div class="card"><div class="p4" style="border-bottom:1px solid var(--border)"><b>Entitlement Roles (${DATA.roles.length})</b></div>${table(['Role', 'Description', 'Members', 'Pages', 'Sectors', 'Doc Types', 'Download', ''], DATA.roles.map(r => tr([`<b>${r.name}</b>`, `<span class="sub">${r.desc}</span>`, `<span class="chip">${r.members}</span>`, `${r.pages}/8`, r.sectors, r.types, r.dl ? 'Yes' : 'No', '<button class="btn btn-secondary btn-sm r-edit">Edit</button> <button class="btn-sm" style="border:0;background:none" data-toast="Role deleted">🗑</button>'])))}</div>`)}
+      ${panel('us', 2, `<div class="card">${table(['Code', 'Name', 'Description', 'Default', 'Status', ''], DATA.sectors.map(s => tr([`<span class="mono">${s.code}</span>`, s.name, `<span class="sub">${s.desc}</span>`, s.def ? '<span class="badge" style="background:#fef3c7;color:#b45309">DEFAULT</span>' : '', s.active ? '<span style="color:#16a34a">Active</span>' : '<span class="muted">Inactive</span>', '<button class="btn btn-secondary btn-sm" data-toast="Edit sector (demo)">Edit</button>'])))}</div>`)}</div>`,
+    mount: root => {
+      $('#u-add').addEventListener('click', () => $('#u-form').classList.toggle('hidden'));
+      $('#r-add').addEventListener('click', () => $('#r-form').classList.toggle('hidden'));
+      root.addEventListener('click', e => { if (e.target.closest('.r-edit')) { $('#r-form').classList.remove('hidden'); $('#r-form').scrollIntoView({ behavior: 'smooth' }); } });
+    },
+  };
+})();
+
+</script>
+  <script>DI.start();</script>
+</body>
+</html>
